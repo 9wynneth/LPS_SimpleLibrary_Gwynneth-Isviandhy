@@ -29,6 +29,7 @@ namespace LPS_SimpleLibrary
         private bool isEditMode = false;
         private int loanId;
 
+
         private void buttonAdd_Click(object sender, EventArgs e)
         {
             isEditMode = false; // Set to Add mode
@@ -72,19 +73,16 @@ namespace LPS_SimpleLibrary
             {
                 // Add new loan record
                 InsertNewLoanRecord();
-                Console.WriteLine($"Inserting: Member ID = {comboBoxMembers.SelectedValue}, Book ID = {comboBoxBooks.SelectedValue}, Date = {dateTimeBookIssue.Value}");
 
             }
             else
             {
-                // Update existing loan record
-                string memberId = comboBoxMembers.SelectedValue.ToString(); // Get selected member ID
-                string bookId = comboBoxBooks.SelectedValue.ToString();     // Get selected book ID
-                DateTime dateBorrowed = dateTimeBookIssue.Value;            // Get selected date
+                string memberId = comboBoxMembers.SelectedValue.ToString(); 
+                string bookId = comboBoxBooks.SelectedValue.ToString();     
+                DateTime dateBorrowed = dateTimeBookIssue.Value;            
 
 
                 UpdateLoanRecord(memberId, bookId, dateBorrowed);
-                Console.WriteLine($"Inserting: Member ID = {comboBoxMembers.SelectedValue}, Book ID = {comboBoxBooks.SelectedValue}, Date = {dateTimeBookIssue.Value}");
 
             }
 
@@ -102,12 +100,13 @@ namespace LPS_SimpleLibrary
             {
                 // Get the selected loan ID from the DataGridView (assuming it's in the first column)
                 int loanId = Convert.ToInt32(dataGridViewLoan.SelectedRows[0].Cells["id_loan"].Value);
+                string bookId = dataGridViewLoan.SelectedRows[0].Cells["id_book"].Value.ToString();
 
                 // Show confirmation message box
                 if (MessageBox.Show("Are you sure you want to delete this loan record?", "Confirm Delete", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     // Proceed with the deletion
-                    DeleteLoanRecord(loanId);
+                    DeleteLoanRecord(loanId, bookId);
                 }
             }
             else
@@ -119,7 +118,7 @@ namespace LPS_SimpleLibrary
         {
             string connectionString = "server=localhost;uid=root;pwd=;database=lps_library";
 
-            string query = "select * from loan";
+            string query = "select l.id_loan,l.id_member, l.id_book, m.nama_member, b.name_book, l.dateborrowed_loan, l.duedate_loan from loan l\r\nleft join `member` m on m.id_member = l.id_member left join book b on b.id_book = l.id_book;";
 
             using (var connection = new MySqlConnection(connectionString))
             using (var command = new MySqlCommand(query, connection))
@@ -129,9 +128,9 @@ namespace LPS_SimpleLibrary
                 connection.Open();
                 adapter.Fill(loanTable);
                 dataGridViewLoan.DataSource = loanTable;
-
-                // Ensure the column names in the DataGridView match the returned data
-                dataGridViewLoan.Columns["id_member"].Visible = false; // Hide id_member if you don't want to display it
+                
+                dataGridViewLoan.Columns["id_member"].Visible = false;
+                dataGridViewLoan.Columns["id_book"].Visible = false;
             }
         }
 
@@ -140,7 +139,10 @@ namespace LPS_SimpleLibrary
         {
             string connectionString = "server=localhost;uid=root;pwd=;database=lps_library";
 
-            string query = "INSERT INTO loan (id_member, id_book, dateBorrowed_loan) VALUES (@id_member, @id_book, @dateBorrowed_loan)";
+            string query = @"INSERT INTO loan (id_member, id_book, dateBorrowed_loan) VALUES (@id_member, @id_book, @dateBorrowed_loan);
+                             UPDATE book 
+                                    SET status_book = 1 
+                                    WHERE id_book = @id_book";
 
             using (var connection = new MySqlConnection(connectionString))
             using (var command = new MySqlCommand(query, connection))
@@ -155,6 +157,8 @@ namespace LPS_SimpleLibrary
 
             // Reload loan data
             LoadLoanData();
+            LoadMemberAndBookData();
+
             tabControl1.TabPages.Remove(tabPageLoanDetail); // Go back to Loan List tab
         }
 
@@ -181,30 +185,37 @@ namespace LPS_SimpleLibrary
 
             // Reload loan data
             LoadLoanData();
+            LoadMemberAndBookData();
             tabControl1.TabPages.Remove(tabPageLoanDetail); // Go back to Loan List tab
         }
 
 
 
 
-        private void DeleteLoanRecord(int loanId)
+        private void DeleteLoanRecord(int loanId, string bookId)
         {
             string connectionString = "server=localhost;uid=root;pwd=;database=lps_library";
 
             if (MessageBox.Show("Are you sure you want to delete this loan record?", "Confirm Delete", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                string queryDelete = "DELETE FROM loan WHERE id_loan = @id_loan";
+                string queryDelete = @"DELETE FROM loan WHERE id_loan = @id_loan; 
+                                       UPDATE book 
+                                    SET status_book = 0 
+                                    WHERE id_book = @id_book      ";
 
                 using (var connection = new MySqlConnection(connectionString))
                 using (var command = new MySqlCommand(queryDelete, connection))
                 {
                     command.Parameters.AddWithValue("@id_loan", loanId);
+                    command.Parameters.AddWithValue("@id_book", bookId);
+
                     connection.Open();
                     command.ExecuteNonQuery();
                 }
 
                 // Refresh the loan data grid
                 LoadLoanData();
+                LoadMemberAndBookData();
             }
         }
 
@@ -227,7 +238,7 @@ namespace LPS_SimpleLibrary
             }
 
             // Load book data
-            string queryBooks = "SELECT id_book, name_book FROM book";
+            string queryBooks = "SELECT id_book, name_book FROM book where status_book = 0;";
             using (var connection = new MySqlConnection(connectionString))
             using (var command = new MySqlCommand(queryBooks, connection))
             using (var adapter = new MySqlDataAdapter(command))
@@ -303,6 +314,13 @@ namespace LPS_SimpleLibrary
 
         private void dateTimeBookIssue_ValueChanged(object sender, EventArgs e)
         {
+
+        }
+
+        private void buttonCancel_Click(object sender, EventArgs e)
+        {
+            tabControl1.TabPages.Remove(tabPageLoanDetail);
+            tabControl1.TabPages.Add(tabPageLoanList);
 
         }
     }

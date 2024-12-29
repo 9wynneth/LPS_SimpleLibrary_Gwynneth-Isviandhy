@@ -33,19 +33,28 @@ namespace LPS_SimpleLibrary
             //LoadLoanData();
             //dateTimePickerDateIssue.Enabled = true;
             //dateTimePickerDateIssue.Value = DateTime.Now; 
-            userControl = new LoanUserControl();
-
-            // Optionally set properties for the user control (e.g., size, location)
-            userControl.Dock = DockStyle.Fill;  // Fills the panel (adjust as needed)
-
-            // Add the user control to the panel
-            panelMain.Controls.Add(userControl);
+          
 
         }
 
         private void buttonSave_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            Form1 form1 = new Form1();
+            form1.Show();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            labelHeading.Text = "Loan Settings";
+            userControl = new LoanUserControl();
+            userControl.Dock = DockStyle.Fill;  // Fills the panel (adjust as needed)
+            panelMain.Controls.Add(userControl);
         }
 
         //private void PopulateMemberComboBox()
