@@ -75,6 +75,7 @@
             this.buttonStaff.TabIndex = 13;
             this.buttonStaff.Text = "Staff";
             this.buttonStaff.UseVisualStyleBackColor = true;
+            this.buttonStaff.Click += new System.EventHandler(this.buttonStaff_Click);
             // 
             // button4
             // 
@@ -94,6 +95,7 @@
             this.buttonBook.TabIndex = 11;
             this.buttonBook.Text = "Book";
             this.buttonBook.UseVisualStyleBackColor = true;
+            this.buttonBook.Click += new System.EventHandler(this.buttonBook_Click);
             // 
             // buttonMember
             // 
@@ -103,6 +105,7 @@
             this.buttonMember.TabIndex = 10;
             this.buttonMember.Text = "Member";
             this.buttonMember.UseVisualStyleBackColor = true;
+            this.buttonMember.Click += new System.EventHandler(this.buttonMember_Click);
             // 
             // panel1
             // 

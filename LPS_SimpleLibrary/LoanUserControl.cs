@@ -20,10 +20,12 @@ namespace LPS_SimpleLibrary
             InitializeComponent();
 
             tabControl1.TabPages.Remove(tabPageLoanDetail);
+            dataGridViewLoan.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 
 
             LoadLoanData();
             LoadMemberAndBookData();
+
 
         }
         private bool isEditMode = false;

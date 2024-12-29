@@ -102,6 +102,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BookUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="BookUserControl.Designer.cs">
+      <DependentUpon>BookUserControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -119,6 +125,12 @@
     </Compile>
     <Compile Include="MemberInputForBorrow.Designer.cs">
       <DependentUpon>MemberInputForBorrow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MemberUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MemberUserControl.Designer.cs">
+      <DependentUpon>MemberUserControl.cs</DependentUpon>
     </Compile>
     <Compile Include="MemberView.cs">
       <SubType>Form</SubType>
@@ -158,6 +170,9 @@
     <Compile Include="_Repository\BookRepository.cs" />
     <Compile Include="_Repository\LoanRepository.cs" />
     <Compile Include="_Repository\StaffRepository.cs" />
+    <EmbeddedResource Include="BookUserControl.resx">
+      <DependentUpon>BookUserControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -166,6 +181,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MemberInputForBorrow.resx">
       <DependentUpon>MemberInputForBorrow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MemberUserControl.resx">
+      <DependentUpon>MemberUserControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MemberView.resx">
       <DependentUpon>MemberView.cs</DependentUpon>

@@ -23,18 +23,29 @@ namespace LPS_SimpleLibrary
 
 
         private LoanUserControl userControl;
+        private StaffUserControl staffControl;
+        private MemberUserControl memberControl;
+        private BookUserControl bookControl;
+
 
         public StaffDashboardView()
         {
             InitializeComponent();
-            //dataGridViewLoan.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            //PopulateMemberComboBox();
-            //PopulateBookComboBox();
-            //LoadLoanData();
-            //dateTimePickerDateIssue.Enabled = true;
-            //dateTimePickerDateIssue.Value = DateTime.Now; 
-            labelHeading.Text = "Settings";
+            userControl = new LoanUserControl();  
+            staffControl = new StaffUserControl();
+            memberControl = new MemberUserControl();
+            bookControl = new BookUserControl();
 
+            labelHeading.Text = "Settings";
+            memberControl.Visible = true;
+            memberControl.Dock = DockStyle.Fill;
+            panelMain.Controls.Add(memberControl);
+
+            if (memberControl.Visible == true)
+            {
+                labelHeading.Text = "Member Settings";
+
+            }
 
         }
 
@@ -50,15 +61,68 @@ namespace LPS_SimpleLibrary
             form1.Show();
         }
 
+
+        private void hideControl()
+        {
+            userControl.Visible = false;
+            staffControl.Visible = false;
+            memberControl.Visible = false;
+            bookControl.Visible = false;
+
+        }
         private void button4_Click(object sender, EventArgs e)
         {
+            hideControl();
+            userControl.Visible = true;
 
-            userControl = new LoanUserControl();
-            userControl.Dock = DockStyle.Fill;  // Fills the panel (adjust as needed)
+            userControl.Dock = DockStyle.Fill;  
             panelMain.Controls.Add(userControl);
 
             if (userControl.Visible == true) {
                 labelHeading.Text = "Loan Settings";
+
+            }
+        }
+
+        private void buttonStaff_Click(object sender, EventArgs e)
+        {
+            hideControl();
+            staffControl.Visible = true;            
+            staffControl.Dock = DockStyle.Fill;  
+            panelMain.Controls.Add(staffControl);
+
+            if (staffControl.Visible == true)
+            {
+                labelHeading.Text = "Staff Settings";
+
+            }
+        }
+
+        private void buttonMember_Click(object sender, EventArgs e)
+        {
+            hideControl();
+            memberControl.Visible = true;
+            memberControl.Dock = DockStyle.Fill;  
+            panelMain.Controls.Add(memberControl);
+
+            if (memberControl.Visible == true)
+            {
+                labelHeading.Text = "Member Settings";
+
+            }
+        }
+
+        private void buttonBook_Click(object sender, EventArgs e)
+        {
+            hideControl();
+            bookControl.Visible = true;
+
+            bookControl.Dock = DockStyle.Fill;
+            panelMain.Controls.Add(bookControl);
+
+            if (bookControl.Visible == true)
+            {
+                labelHeading.Text = "Book Settings";
 
             }
         }

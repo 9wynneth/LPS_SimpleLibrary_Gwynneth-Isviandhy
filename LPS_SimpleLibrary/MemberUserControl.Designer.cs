@@ -1,6 +1,6 @@
 ﻿namespace LPS_SimpleLibrary
 {
-    partial class StaffUserControl
+    partial class MemberUserControl
     {
         /// <summary> 
         /// Required designer variable.
@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.dataGridViewMember = new System.Windows.Forms.DataGridView();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.buttonDelete = new System.Windows.Forms.Button();
@@ -35,38 +36,48 @@
             this.buttonAdd = new System.Windows.Forms.Button();
             this.labelDataRow = new System.Windows.Forms.Label();
             this.buttonSave = new System.Windows.Forms.Button();
-            this.dataGridViewStaff = new System.Windows.Forms.DataGridView();
-            this.tabPageStaffDetail = new System.Windows.Forms.TabPage();
+            this.tabPageMemberDetail = new System.Windows.Forms.TabPage();
+            this.textBoxEmail = new System.Windows.Forms.TextBox();
+            this.textBoxName = new System.Windows.Forms.TextBox();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPageStaffList = new System.Windows.Forms.TabPage();
+            this.tabPageMemberList = new System.Windows.Forms.TabPage();
             this.textBoxSearch = new System.Windows.Forms.TextBox();
             this.lab = new System.Windows.Forms.Label();
-            this.textBoxName = new System.Windows.Forms.TextBox();
-            this.textBoxPassword = new System.Windows.Forms.TextBox();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewStaff)).BeginInit();
-            this.tabPageStaffDetail.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewMember)).BeginInit();
+            this.tabPageMemberDetail.SuspendLayout();
             this.tabControl1.SuspendLayout();
-            this.tabPageStaffList.SuspendLayout();
+            this.tabPageMemberList.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // dataGridViewMember
+            // 
+            this.dataGridViewMember.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewMember.Location = new System.Drawing.Point(10, 79);
+            this.dataGridViewMember.Name = "dataGridViewMember";
+            this.dataGridViewMember.RowHeadersWidth = 62;
+            this.dataGridViewMember.RowTemplate.Height = 28;
+            this.dataGridViewMember.Size = new System.Drawing.Size(621, 240);
+            this.dataGridViewMember.TabIndex = 4;
+            this.dataGridViewMember.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewMember_CellClick);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(17, 128);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(82, 20);
+            this.label2.Size = new System.Drawing.Size(52, 20);
             this.label2.TabIndex = 2;
-            this.label2.Text = "Password:";
+            this.label2.Text = "Email:";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(17, 43);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(94, 20);
+            this.label1.Size = new System.Drawing.Size(117, 20);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Staff Name:";
+            this.label1.Text = "Member Name:";
             // 
             // buttonDelete
             // 
@@ -116,32 +127,37 @@
             this.buttonSave.UseVisualStyleBackColor = true;
             this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
             // 
-            // dataGridViewStaff
+            // tabPageMemberDetail
             // 
-            this.dataGridViewStaff.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewStaff.Location = new System.Drawing.Point(10, 79);
-            this.dataGridViewStaff.Name = "dataGridViewStaff";
-            this.dataGridViewStaff.RowHeadersWidth = 62;
-            this.dataGridViewStaff.RowTemplate.Height = 28;
-            this.dataGridViewStaff.Size = new System.Drawing.Size(621, 240);
-            this.dataGridViewStaff.TabIndex = 4;
-            this.dataGridViewStaff.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewStaff_CellClick);
+            this.tabPageMemberDetail.Controls.Add(this.textBoxEmail);
+            this.tabPageMemberDetail.Controls.Add(this.textBoxName);
+            this.tabPageMemberDetail.Controls.Add(this.buttonCancel);
+            this.tabPageMemberDetail.Controls.Add(this.buttonSave);
+            this.tabPageMemberDetail.Controls.Add(this.label2);
+            this.tabPageMemberDetail.Controls.Add(this.label1);
+            this.tabPageMemberDetail.Location = new System.Drawing.Point(4, 29);
+            this.tabPageMemberDetail.Name = "tabPageMemberDetail";
+            this.tabPageMemberDetail.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageMemberDetail.Size = new System.Drawing.Size(742, 360);
+            this.tabPageMemberDetail.TabIndex = 1;
+            this.tabPageMemberDetail.Text = "Member Details";
+            this.tabPageMemberDetail.UseVisualStyleBackColor = true;
             // 
-            // tabPageStaffDetail
+            // textBoxEmail
             // 
-            this.tabPageStaffDetail.Controls.Add(this.textBoxPassword);
-            this.tabPageStaffDetail.Controls.Add(this.textBoxName);
-            this.tabPageStaffDetail.Controls.Add(this.buttonCancel);
-            this.tabPageStaffDetail.Controls.Add(this.buttonSave);
-            this.tabPageStaffDetail.Controls.Add(this.label2);
-            this.tabPageStaffDetail.Controls.Add(this.label1);
-            this.tabPageStaffDetail.Location = new System.Drawing.Point(4, 29);
-            this.tabPageStaffDetail.Name = "tabPageStaffDetail";
-            this.tabPageStaffDetail.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageStaffDetail.Size = new System.Drawing.Size(742, 360);
-            this.tabPageStaffDetail.TabIndex = 1;
-            this.tabPageStaffDetail.Text = "Staff Details";
-            this.tabPageStaffDetail.UseVisualStyleBackColor = true;
+            this.textBoxEmail.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxEmail.Location = new System.Drawing.Point(21, 167);
+            this.textBoxEmail.Name = "textBoxEmail";
+            this.textBoxEmail.Size = new System.Drawing.Size(235, 28);
+            this.textBoxEmail.TabIndex = 9;
+            // 
+            // textBoxName
+            // 
+            this.textBoxName.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxName.Location = new System.Drawing.Point(21, 79);
+            this.textBoxName.Name = "textBoxName";
+            this.textBoxName.Size = new System.Drawing.Size(235, 28);
+            this.textBoxName.TabIndex = 8;
             // 
             // buttonCancel
             // 
@@ -155,31 +171,31 @@
             // 
             // tabControl1
             // 
-            this.tabControl1.Controls.Add(this.tabPageStaffList);
-            this.tabControl1.Controls.Add(this.tabPageStaffDetail);
+            this.tabControl1.Controls.Add(this.tabPageMemberList);
+            this.tabControl1.Controls.Add(this.tabPageMemberDetail);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(750, 393);
-            this.tabControl1.TabIndex = 5;
+            this.tabControl1.TabIndex = 6;
             // 
-            // tabPageStaffList
+            // tabPageMemberList
             // 
-            this.tabPageStaffList.Controls.Add(this.buttonDelete);
-            this.tabPageStaffList.Controls.Add(this.buttonEdit);
-            this.tabPageStaffList.Controls.Add(this.buttonAdd);
-            this.tabPageStaffList.Controls.Add(this.labelDataRow);
-            this.tabPageStaffList.Controls.Add(this.dataGridViewStaff);
-            this.tabPageStaffList.Controls.Add(this.textBoxSearch);
-            this.tabPageStaffList.Controls.Add(this.lab);
-            this.tabPageStaffList.Location = new System.Drawing.Point(4, 29);
-            this.tabPageStaffList.Name = "tabPageStaffList";
-            this.tabPageStaffList.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageStaffList.Size = new System.Drawing.Size(742, 360);
-            this.tabPageStaffList.TabIndex = 0;
-            this.tabPageStaffList.Text = "Staff List";
-            this.tabPageStaffList.UseVisualStyleBackColor = true;
+            this.tabPageMemberList.Controls.Add(this.buttonDelete);
+            this.tabPageMemberList.Controls.Add(this.buttonEdit);
+            this.tabPageMemberList.Controls.Add(this.buttonAdd);
+            this.tabPageMemberList.Controls.Add(this.labelDataRow);
+            this.tabPageMemberList.Controls.Add(this.dataGridViewMember);
+            this.tabPageMemberList.Controls.Add(this.textBoxSearch);
+            this.tabPageMemberList.Controls.Add(this.lab);
+            this.tabPageMemberList.Location = new System.Drawing.Point(4, 29);
+            this.tabPageMemberList.Name = "tabPageMemberList";
+            this.tabPageMemberList.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageMemberList.Size = new System.Drawing.Size(742, 360);
+            this.tabPageMemberList.TabIndex = 0;
+            this.tabPageMemberList.Text = "Member List";
+            this.tabPageMemberList.UseVisualStyleBackColor = true;
             // 
             // textBoxSearch
             // 
@@ -199,40 +215,26 @@
             this.lab.TabIndex = 2;
             this.lab.Text = "Search:";
             // 
-            // textBoxName
-            // 
-            this.textBoxName.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxName.Location = new System.Drawing.Point(21, 79);
-            this.textBoxName.Name = "textBoxName";
-            this.textBoxName.Size = new System.Drawing.Size(235, 28);
-            this.textBoxName.TabIndex = 8;
-            // 
-            // textBoxPassword
-            // 
-            this.textBoxPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxPassword.Location = new System.Drawing.Point(21, 167);
-            this.textBoxPassword.Name = "textBoxPassword";
-            this.textBoxPassword.Size = new System.Drawing.Size(235, 28);
-            this.textBoxPassword.TabIndex = 9;
-            // 
-            // StaffUserControl
+            // MemberUserControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.tabControl1);
-            this.Name = "StaffUserControl";
+            this.Name = "MemberUserControl";
             this.Size = new System.Drawing.Size(750, 393);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewStaff)).EndInit();
-            this.tabPageStaffDetail.ResumeLayout(false);
-            this.tabPageStaffDetail.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewMember)).EndInit();
+            this.tabPageMemberDetail.ResumeLayout(false);
+            this.tabPageMemberDetail.PerformLayout();
             this.tabControl1.ResumeLayout(false);
-            this.tabPageStaffList.ResumeLayout(false);
-            this.tabPageStaffList.PerformLayout();
+            this.tabPageMemberList.ResumeLayout(false);
+            this.tabPageMemberList.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
+
+        private System.Windows.Forms.DataGridView dataGridViewMember;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button buttonDelete;
@@ -240,14 +242,13 @@
         private System.Windows.Forms.Button buttonAdd;
         private System.Windows.Forms.Label labelDataRow;
         private System.Windows.Forms.Button buttonSave;
-        private System.Windows.Forms.DataGridView dataGridViewStaff;
-        private System.Windows.Forms.TabPage tabPageStaffDetail;
+        private System.Windows.Forms.TabPage tabPageMemberDetail;
+        private System.Windows.Forms.TextBox textBoxEmail;
+        private System.Windows.Forms.TextBox textBoxName;
         private System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPageStaffList;
+        private System.Windows.Forms.TabPage tabPageMemberList;
         private System.Windows.Forms.TextBox textBoxSearch;
         private System.Windows.Forms.Label lab;
-        private System.Windows.Forms.TextBox textBoxPassword;
-        private System.Windows.Forms.TextBox textBoxName;
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace LPS_SimpleLibrary
 {
-    partial class StaffUserControl
+    partial class BookUserControl
     {
         /// <summary> 
         /// Required designer variable.
@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.dataGridViewBook = new System.Windows.Forms.DataGridView();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.buttonDelete = new System.Windows.Forms.Button();
@@ -35,38 +36,50 @@
             this.buttonAdd = new System.Windows.Forms.Button();
             this.labelDataRow = new System.Windows.Forms.Label();
             this.buttonSave = new System.Windows.Forms.Button();
-            this.dataGridViewStaff = new System.Windows.Forms.DataGridView();
-            this.tabPageStaffDetail = new System.Windows.Forms.TabPage();
+            this.tabPageBookDetail = new System.Windows.Forms.TabPage();
+            this.textBoxGenre = new System.Windows.Forms.TextBox();
+            this.textBoxName = new System.Windows.Forms.TextBox();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPageStaffList = new System.Windows.Forms.TabPage();
+            this.tabPageBookList = new System.Windows.Forms.TabPage();
             this.textBoxSearch = new System.Windows.Forms.TextBox();
             this.lab = new System.Windows.Forms.Label();
-            this.textBoxName = new System.Windows.Forms.TextBox();
-            this.textBoxPassword = new System.Windows.Forms.TextBox();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewStaff)).BeginInit();
-            this.tabPageStaffDetail.SuspendLayout();
+            this.textBoxAuthor = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewBook)).BeginInit();
+            this.tabPageBookDetail.SuspendLayout();
             this.tabControl1.SuspendLayout();
-            this.tabPageStaffList.SuspendLayout();
+            this.tabPageBookList.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // dataGridViewBook
+            // 
+            this.dataGridViewBook.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewBook.Location = new System.Drawing.Point(10, 79);
+            this.dataGridViewBook.Name = "dataGridViewBook";
+            this.dataGridViewBook.RowHeadersWidth = 62;
+            this.dataGridViewBook.RowTemplate.Height = 28;
+            this.dataGridViewBook.Size = new System.Drawing.Size(621, 240);
+            this.dataGridViewBook.TabIndex = 4;
+            this.dataGridViewBook.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewBook_CellContentClick);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(17, 128);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(82, 20);
+            this.label2.Size = new System.Drawing.Size(58, 20);
             this.label2.TabIndex = 2;
-            this.label2.Text = "Password:";
+            this.label2.Text = "Genre:";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(17, 43);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(94, 20);
+            this.label1.Size = new System.Drawing.Size(96, 20);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Staff Name:";
+            this.label1.Text = "Book Name:";
             // 
             // buttonDelete
             // 
@@ -116,32 +129,39 @@
             this.buttonSave.UseVisualStyleBackColor = true;
             this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
             // 
-            // dataGridViewStaff
+            // tabPageBookDetail
             // 
-            this.dataGridViewStaff.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewStaff.Location = new System.Drawing.Point(10, 79);
-            this.dataGridViewStaff.Name = "dataGridViewStaff";
-            this.dataGridViewStaff.RowHeadersWidth = 62;
-            this.dataGridViewStaff.RowTemplate.Height = 28;
-            this.dataGridViewStaff.Size = new System.Drawing.Size(621, 240);
-            this.dataGridViewStaff.TabIndex = 4;
-            this.dataGridViewStaff.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewStaff_CellClick);
+            this.tabPageBookDetail.Controls.Add(this.textBoxAuthor);
+            this.tabPageBookDetail.Controls.Add(this.label3);
+            this.tabPageBookDetail.Controls.Add(this.textBoxGenre);
+            this.tabPageBookDetail.Controls.Add(this.textBoxName);
+            this.tabPageBookDetail.Controls.Add(this.buttonCancel);
+            this.tabPageBookDetail.Controls.Add(this.buttonSave);
+            this.tabPageBookDetail.Controls.Add(this.label2);
+            this.tabPageBookDetail.Controls.Add(this.label1);
+            this.tabPageBookDetail.Location = new System.Drawing.Point(4, 29);
+            this.tabPageBookDetail.Name = "tabPageBookDetail";
+            this.tabPageBookDetail.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageBookDetail.Size = new System.Drawing.Size(742, 360);
+            this.tabPageBookDetail.TabIndex = 1;
+            this.tabPageBookDetail.Text = "Book Details";
+            this.tabPageBookDetail.UseVisualStyleBackColor = true;
             // 
-            // tabPageStaffDetail
+            // textBoxGenre
             // 
-            this.tabPageStaffDetail.Controls.Add(this.textBoxPassword);
-            this.tabPageStaffDetail.Controls.Add(this.textBoxName);
-            this.tabPageStaffDetail.Controls.Add(this.buttonCancel);
-            this.tabPageStaffDetail.Controls.Add(this.buttonSave);
-            this.tabPageStaffDetail.Controls.Add(this.label2);
-            this.tabPageStaffDetail.Controls.Add(this.label1);
-            this.tabPageStaffDetail.Location = new System.Drawing.Point(4, 29);
-            this.tabPageStaffDetail.Name = "tabPageStaffDetail";
-            this.tabPageStaffDetail.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageStaffDetail.Size = new System.Drawing.Size(742, 360);
-            this.tabPageStaffDetail.TabIndex = 1;
-            this.tabPageStaffDetail.Text = "Staff Details";
-            this.tabPageStaffDetail.UseVisualStyleBackColor = true;
+            this.textBoxGenre.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxGenre.Location = new System.Drawing.Point(21, 167);
+            this.textBoxGenre.Name = "textBoxGenre";
+            this.textBoxGenre.Size = new System.Drawing.Size(145, 28);
+            this.textBoxGenre.TabIndex = 9;
+            // 
+            // textBoxName
+            // 
+            this.textBoxName.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxName.Location = new System.Drawing.Point(21, 79);
+            this.textBoxName.Name = "textBoxName";
+            this.textBoxName.Size = new System.Drawing.Size(254, 28);
+            this.textBoxName.TabIndex = 8;
             // 
             // buttonCancel
             // 
@@ -155,31 +175,31 @@
             // 
             // tabControl1
             // 
-            this.tabControl1.Controls.Add(this.tabPageStaffList);
-            this.tabControl1.Controls.Add(this.tabPageStaffDetail);
+            this.tabControl1.Controls.Add(this.tabPageBookList);
+            this.tabControl1.Controls.Add(this.tabPageBookDetail);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(750, 393);
-            this.tabControl1.TabIndex = 5;
+            this.tabControl1.TabIndex = 7;
             // 
-            // tabPageStaffList
+            // tabPageBookList
             // 
-            this.tabPageStaffList.Controls.Add(this.buttonDelete);
-            this.tabPageStaffList.Controls.Add(this.buttonEdit);
-            this.tabPageStaffList.Controls.Add(this.buttonAdd);
-            this.tabPageStaffList.Controls.Add(this.labelDataRow);
-            this.tabPageStaffList.Controls.Add(this.dataGridViewStaff);
-            this.tabPageStaffList.Controls.Add(this.textBoxSearch);
-            this.tabPageStaffList.Controls.Add(this.lab);
-            this.tabPageStaffList.Location = new System.Drawing.Point(4, 29);
-            this.tabPageStaffList.Name = "tabPageStaffList";
-            this.tabPageStaffList.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageStaffList.Size = new System.Drawing.Size(742, 360);
-            this.tabPageStaffList.TabIndex = 0;
-            this.tabPageStaffList.Text = "Staff List";
-            this.tabPageStaffList.UseVisualStyleBackColor = true;
+            this.tabPageBookList.Controls.Add(this.buttonDelete);
+            this.tabPageBookList.Controls.Add(this.buttonEdit);
+            this.tabPageBookList.Controls.Add(this.buttonAdd);
+            this.tabPageBookList.Controls.Add(this.labelDataRow);
+            this.tabPageBookList.Controls.Add(this.dataGridViewBook);
+            this.tabPageBookList.Controls.Add(this.textBoxSearch);
+            this.tabPageBookList.Controls.Add(this.lab);
+            this.tabPageBookList.Location = new System.Drawing.Point(4, 29);
+            this.tabPageBookList.Name = "tabPageBookList";
+            this.tabPageBookList.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageBookList.Size = new System.Drawing.Size(742, 360);
+            this.tabPageBookList.TabIndex = 0;
+            this.tabPageBookList.Text = "Book List";
+            this.tabPageBookList.UseVisualStyleBackColor = true;
             // 
             // textBoxSearch
             // 
@@ -199,40 +219,43 @@
             this.lab.TabIndex = 2;
             this.lab.Text = "Search:";
             // 
-            // textBoxName
+            // textBoxAuthor
             // 
-            this.textBoxName.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxName.Location = new System.Drawing.Point(21, 79);
-            this.textBoxName.Name = "textBoxName";
-            this.textBoxName.Size = new System.Drawing.Size(235, 28);
-            this.textBoxName.TabIndex = 8;
+            this.textBoxAuthor.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxAuthor.Location = new System.Drawing.Point(310, 167);
+            this.textBoxAuthor.Name = "textBoxAuthor";
+            this.textBoxAuthor.Size = new System.Drawing.Size(211, 28);
+            this.textBoxAuthor.TabIndex = 11;
             // 
-            // textBoxPassword
+            // label3
             // 
-            this.textBoxPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxPassword.Location = new System.Drawing.Point(21, 167);
-            this.textBoxPassword.Name = "textBoxPassword";
-            this.textBoxPassword.Size = new System.Drawing.Size(235, 28);
-            this.textBoxPassword.TabIndex = 9;
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(306, 128);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(61, 20);
+            this.label3.TabIndex = 10;
+            this.label3.Text = "Author:";
             // 
-            // StaffUserControl
+            // BookUserControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.tabControl1);
-            this.Name = "StaffUserControl";
+            this.Name = "BookUserControl";
             this.Size = new System.Drawing.Size(750, 393);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewStaff)).EndInit();
-            this.tabPageStaffDetail.ResumeLayout(false);
-            this.tabPageStaffDetail.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewBook)).EndInit();
+            this.tabPageBookDetail.ResumeLayout(false);
+            this.tabPageBookDetail.PerformLayout();
             this.tabControl1.ResumeLayout(false);
-            this.tabPageStaffList.ResumeLayout(false);
-            this.tabPageStaffList.PerformLayout();
+            this.tabPageBookList.ResumeLayout(false);
+            this.tabPageBookList.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
+
+        private System.Windows.Forms.DataGridView dataGridViewBook;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button buttonDelete;
@@ -240,14 +263,15 @@
         private System.Windows.Forms.Button buttonAdd;
         private System.Windows.Forms.Label labelDataRow;
         private System.Windows.Forms.Button buttonSave;
-        private System.Windows.Forms.DataGridView dataGridViewStaff;
-        private System.Windows.Forms.TabPage tabPageStaffDetail;
+        private System.Windows.Forms.TabPage tabPageBookDetail;
+        private System.Windows.Forms.TextBox textBoxAuthor;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox textBoxGenre;
+        private System.Windows.Forms.TextBox textBoxName;
         private System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPageStaffList;
+        private System.Windows.Forms.TabPage tabPageBookList;
         private System.Windows.Forms.TextBox textBoxSearch;
         private System.Windows.Forms.Label lab;
-        private System.Windows.Forms.TextBox textBoxPassword;
-        private System.Windows.Forms.TextBox textBoxName;
     }
 }
