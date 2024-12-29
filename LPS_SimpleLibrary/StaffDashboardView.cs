@@ -33,7 +33,8 @@ namespace LPS_SimpleLibrary
             //LoadLoanData();
             //dateTimePickerDateIssue.Enabled = true;
             //dateTimePickerDateIssue.Value = DateTime.Now; 
-          
+            labelHeading.Text = "Settings";
+
 
         }
 
@@ -51,10 +52,15 @@ namespace LPS_SimpleLibrary
 
         private void button4_Click(object sender, EventArgs e)
         {
-            labelHeading.Text = "Loan Settings";
+
             userControl = new LoanUserControl();
             userControl.Dock = DockStyle.Fill;  // Fills the panel (adjust as needed)
             panelMain.Controls.Add(userControl);
+
+            if (userControl.Visible == true) {
+                labelHeading.Text = "Loan Settings";
+
+            }
         }
 
         //private void PopulateMemberComboBox()

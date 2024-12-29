@@ -142,6 +142,12 @@
     <Compile Include="StaffDashboardView.Designer.cs">
       <DependentUpon>StaffDashboardView.cs</DependentUpon>
     </Compile>
+    <Compile Include="StaffUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="StaffUserControl.Designer.cs">
+      <DependentUpon>StaffUserControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="StaffView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -175,6 +181,9 @@
     </Compile>
     <EmbeddedResource Include="StaffDashboardView.resx">
       <DependentUpon>StaffDashboardView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StaffUserControl.resx">
+      <DependentUpon>StaffUserControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="StaffView.resx">
       <DependentUpon>StaffView.cs</DependentUpon>

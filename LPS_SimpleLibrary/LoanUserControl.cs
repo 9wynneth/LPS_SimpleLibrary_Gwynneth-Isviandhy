@@ -131,6 +131,8 @@ namespace LPS_SimpleLibrary
                 
                 dataGridViewLoan.Columns["id_member"].Visible = false;
                 dataGridViewLoan.Columns["id_book"].Visible = false;
+
+                labelDataRow.Text = $"Showing {loanTable.Rows.Count.ToString()} rows" ;
             }
         }
 
@@ -251,7 +253,45 @@ namespace LPS_SimpleLibrary
                 comboBoxBooks.ValueMember = "id_book";
             }
         }
+        private void SearchDataGridView(string loanID, string memberID, string bookID, string memberName, string bookName, string dateBorrowLoan, string dueDateLoan)
+        {
+            string connectionString = "server=localhost;uid=root;pwd=;database=lps_library";
 
+            string query = @"select l.id_loan,l.id_member, l.id_book, m.nama_member, b.name_book, 
+                            l.dateborrowed_loan, l.duedate_loan from loan l
+                            left join `member` m on m.id_member = l.id_member 
+                            left join book b on b.id_book = l.id_book           
+                            where l.id_loan like @Loanid or l.id_member like @Memberid or 
+                            l.id_book like @Bookid or m.nama_member like @MemberName or 
+                            b.name_book like @BookName or
+                            l.dateborrowed_loan like @DateBorrowLoan or l.duedate_loan like @DueDateLoan;     ";
+
+            DataTable dataTable = new DataTable();
+
+            using (var connection = new MySqlConnection(connectionString))
+            using (var command = new MySqlCommand(query, connection))
+            using (var adapter = new MySqlDataAdapter(command))
+            {
+                command.Parameters.AddWithValue("@Loanid", "%" + loanID + "%");
+                command.Parameters.AddWithValue("@Memberid", "%" + memberID + "%");
+                command.Parameters.AddWithValue("@Bookid", "%" + bookID + "%");
+                command.Parameters.AddWithValue("@MemberName", "%" + memberName + "%");
+                command.Parameters.AddWithValue("@BookName", "%" + bookName + "%");
+                command.Parameters.AddWithValue("@DateBorrowLoan", "%" + dateBorrowLoan + "%");
+                command.Parameters.AddWithValue("@DueDateLoan", "%" + dueDateLoan + "%");
+
+
+                connection.Open();
+                adapter.Fill(dataTable);
+                dataGridViewLoan.Columns["id_member"].Visible = false;
+                dataGridViewLoan.Columns["id_book"].Visible = false;
+            }
+
+            // Update the DataGridView
+            dataGridViewLoan.DataSource = dataTable;
+            labelDataRow.Text = $"Showing {dataTable.Rows.Count} rows.";
+
+        }
         private void dataGridViewLoan_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
@@ -264,7 +304,10 @@ namespace LPS_SimpleLibrary
 
         private void textBoxSearch_TextChanged(object sender, EventArgs e)
         {
+            string searchValue = textBoxSearch.Text;
 
+            // Update DataGridView rows directly
+            SearchDataGridView(searchValue, searchValue, searchValue, searchValue, searchValue, searchValue, searchValue);
         }
 
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
