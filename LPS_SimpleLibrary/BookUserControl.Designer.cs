@@ -37,6 +37,8 @@
             this.labelDataRow = new System.Windows.Forms.Label();
             this.buttonSave = new System.Windows.Forms.Button();
             this.tabPageBookDetail = new System.Windows.Forms.TabPage();
+            this.textBoxAuthor = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.textBoxGenre = new System.Windows.Forms.TextBox();
             this.textBoxName = new System.Windows.Forms.TextBox();
             this.buttonCancel = new System.Windows.Forms.Button();
@@ -44,8 +46,6 @@
             this.tabPageBookList = new System.Windows.Forms.TabPage();
             this.textBoxSearch = new System.Windows.Forms.TextBox();
             this.lab = new System.Windows.Forms.Label();
-            this.textBoxAuthor = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewBook)).BeginInit();
             this.tabPageBookDetail.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -61,6 +61,7 @@
             this.dataGridViewBook.RowTemplate.Height = 28;
             this.dataGridViewBook.Size = new System.Drawing.Size(621, 240);
             this.dataGridViewBook.TabIndex = 4;
+            this.dataGridViewBook.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewBook_CellClick);
             this.dataGridViewBook.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewBook_CellContentClick);
             // 
             // label2
@@ -99,6 +100,7 @@
             this.buttonEdit.TabIndex = 7;
             this.buttonEdit.Text = "Edit";
             this.buttonEdit.UseVisualStyleBackColor = true;
+            this.buttonEdit.Click += new System.EventHandler(this.buttonEdit_Click);
             // 
             // buttonAdd
             // 
@@ -146,6 +148,23 @@
             this.tabPageBookDetail.TabIndex = 1;
             this.tabPageBookDetail.Text = "Book Details";
             this.tabPageBookDetail.UseVisualStyleBackColor = true;
+            // 
+            // textBoxAuthor
+            // 
+            this.textBoxAuthor.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxAuthor.Location = new System.Drawing.Point(310, 167);
+            this.textBoxAuthor.Name = "textBoxAuthor";
+            this.textBoxAuthor.Size = new System.Drawing.Size(211, 28);
+            this.textBoxAuthor.TabIndex = 11;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(306, 128);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(61, 20);
+            this.label3.TabIndex = 10;
+            this.label3.Text = "Author:";
             // 
             // textBoxGenre
             // 
@@ -218,23 +237,6 @@
             this.lab.Size = new System.Drawing.Size(64, 20);
             this.lab.TabIndex = 2;
             this.lab.Text = "Search:";
-            // 
-            // textBoxAuthor
-            // 
-            this.textBoxAuthor.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxAuthor.Location = new System.Drawing.Point(310, 167);
-            this.textBoxAuthor.Name = "textBoxAuthor";
-            this.textBoxAuthor.Size = new System.Drawing.Size(211, 28);
-            this.textBoxAuthor.TabIndex = 11;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(306, 128);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(61, 20);
-            this.label3.TabIndex = 10;
-            this.label3.Text = "Author:";
             // 
             // BookUserControl
             // 

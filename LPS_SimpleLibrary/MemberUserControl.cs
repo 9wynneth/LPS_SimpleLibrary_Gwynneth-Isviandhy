@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -282,6 +283,79 @@ namespace LPS_SimpleLibrary
         {
             string searchValue = textBoxSearch.Text;
             SearchDataGridView(searchValue, searchValue);
+        }
+
+        private void buttonEdit_Click(object sender, EventArgs e)
+        {
+            isEditMode = true; // Set to Edit mode
+            tabControl1.TabPages.Remove(tabPageMemberList);
+            tabControl1.TabPages.Add(tabPageMemberDetail);
+
+            if (dataGridViewMember.SelectedCells.Count > 0)
+            {
+                var selectedCell = dataGridViewMember.SelectedCells[0];
+                var selectedRow = selectedCell.OwningRow; 
+
+                currentMemberId = selectedRow.Cells["id_member"].Value.ToString();  // Store loanId here
+
+                // Populate combo boxes and DateTimePicker with selected loan data
+                textBoxName.Text = selectedRow.Cells["nama_member"].Value.ToString();
+                textBoxEmail.Text = selectedRow.Cells["email_member"].Value.ToString();
+            }
+            else
+            {
+                MessageBox.Show("Please select a cell to edit.");
+            }
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tabPageMemberList_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void labelDataRow_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tabPageMemberDetail_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBoxEmail_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBoxName_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dataGridViewMember_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void lab_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

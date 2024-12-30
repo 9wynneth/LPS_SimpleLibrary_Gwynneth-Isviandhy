@@ -113,6 +113,7 @@
             // 
             // buttonEdit
             // 
+            this.buttonEdit.Visible = false;
             this.buttonEdit.Location = new System.Drawing.Point(644, 141);
             this.buttonEdit.Name = "buttonEdit";
             this.buttonEdit.Size = new System.Drawing.Size(86, 47);

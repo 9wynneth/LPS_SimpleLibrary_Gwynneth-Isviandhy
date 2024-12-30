@@ -284,5 +284,78 @@ namespace LPS_SimpleLibrary
             string searchValue = textBoxSearch.Text;
             SearchDataGridView(searchValue, searchValue);
         }
+
+        private void buttonEdit_Click(object sender, EventArgs e)
+        {
+            isEditMode = true; // Set to Edit mode
+            tabControl1.TabPages.Remove(tabPageStaffList);
+            tabControl1.TabPages.Add(tabPageStaffDetail);
+
+            if (dataGridViewStaff.SelectedCells.Count > 0)
+            {
+                var selectedCell = dataGridViewStaff.SelectedCells[0];
+                var selectedRow = selectedCell.OwningRow;
+
+                currentStaffId = selectedRow.Cells["id_staff"].Value.ToString(); 
+
+                // Populate combo boxes and DateTimePicker with selected loan data
+                textBoxName.Text = selectedRow.Cells["nama_staff"].Value.ToString();
+                textBoxPassword.Text = selectedRow.Cells["password_staff"].Value.ToString();
+            }
+            else
+            {
+                MessageBox.Show("Please select a cell to edit.");
+            }
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dataGridViewStaff_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void labelDataRow_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tabPageStaffDetail_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tabPageStaffList_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lab_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBoxName_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBoxPassword_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

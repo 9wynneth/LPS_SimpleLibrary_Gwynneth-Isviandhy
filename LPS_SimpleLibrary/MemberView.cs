@@ -41,7 +41,7 @@ namespace LPS_SimpleLibrary
                  WHEN status_book = 0 THEN 'Available'
                  WHEN status_book = 1 THEN 'Not Available'
              END AS status_book 
-             FROM book;";
+             FROM book where delete_book = 0;";
 
             DataTable dataTable = new DataTable();
 

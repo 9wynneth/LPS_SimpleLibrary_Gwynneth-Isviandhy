@@ -24,7 +24,7 @@ namespace LPS_SimpleLibrary
         private void LoadMembers()
         {
             string connectionString = "server=localhost;uid=root;pwd=;database=lps_library";
-            string query = "SELECT id_member, nama_member FROM member";
+            string query = "SELECT id_member, nama_member FROM member where delete_member = 0;";
 
             DataTable memberTable = new DataTable();
 

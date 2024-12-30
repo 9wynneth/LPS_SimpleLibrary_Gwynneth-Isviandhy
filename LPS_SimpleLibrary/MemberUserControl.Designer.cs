@@ -60,6 +60,7 @@
             this.dataGridViewMember.Size = new System.Drawing.Size(621, 240);
             this.dataGridViewMember.TabIndex = 4;
             this.dataGridViewMember.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewMember_CellClick);
+            this.dataGridViewMember.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewMember_CellContentClick);
             // 
             // label2
             // 
@@ -69,6 +70,7 @@
             this.label2.Size = new System.Drawing.Size(52, 20);
             this.label2.TabIndex = 2;
             this.label2.Text = "Email:";
+            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // label1
             // 
@@ -78,6 +80,7 @@
             this.label1.Size = new System.Drawing.Size(117, 20);
             this.label1.TabIndex = 0;
             this.label1.Text = "Member Name:";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // buttonDelete
             // 
@@ -97,6 +100,7 @@
             this.buttonEdit.TabIndex = 7;
             this.buttonEdit.Text = "Edit";
             this.buttonEdit.UseVisualStyleBackColor = true;
+            this.buttonEdit.Click += new System.EventHandler(this.buttonEdit_Click);
             // 
             // buttonAdd
             // 
@@ -116,6 +120,7 @@
             this.labelDataRow.Size = new System.Drawing.Size(51, 20);
             this.labelDataRow.TabIndex = 5;
             this.labelDataRow.Text = "label1";
+            this.labelDataRow.Click += new System.EventHandler(this.labelDataRow_Click);
             // 
             // buttonSave
             // 
@@ -142,6 +147,7 @@
             this.tabPageMemberDetail.TabIndex = 1;
             this.tabPageMemberDetail.Text = "Member Details";
             this.tabPageMemberDetail.UseVisualStyleBackColor = true;
+            this.tabPageMemberDetail.Click += new System.EventHandler(this.tabPageMemberDetail_Click);
             // 
             // textBoxEmail
             // 
@@ -150,6 +156,7 @@
             this.textBoxEmail.Name = "textBoxEmail";
             this.textBoxEmail.Size = new System.Drawing.Size(235, 28);
             this.textBoxEmail.TabIndex = 9;
+            this.textBoxEmail.TextChanged += new System.EventHandler(this.textBoxEmail_TextChanged);
             // 
             // textBoxName
             // 
@@ -158,6 +165,7 @@
             this.textBoxName.Name = "textBoxName";
             this.textBoxName.Size = new System.Drawing.Size(235, 28);
             this.textBoxName.TabIndex = 8;
+            this.textBoxName.TextChanged += new System.EventHandler(this.textBoxName_TextChanged);
             // 
             // buttonCancel
             // 
@@ -179,6 +187,7 @@
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(750, 393);
             this.tabControl1.TabIndex = 6;
+            this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             // 
             // tabPageMemberList
             // 
@@ -196,6 +205,7 @@
             this.tabPageMemberList.TabIndex = 0;
             this.tabPageMemberList.Text = "Member List";
             this.tabPageMemberList.UseVisualStyleBackColor = true;
+            this.tabPageMemberList.Click += new System.EventHandler(this.tabPageMemberList_Click);
             // 
             // textBoxSearch
             // 
@@ -214,6 +224,7 @@
             this.lab.Size = new System.Drawing.Size(64, 20);
             this.lab.TabIndex = 2;
             this.lab.Text = "Search:";
+            this.lab.Click += new System.EventHandler(this.lab_Click);
             // 
             // MemberUserControl
             // 

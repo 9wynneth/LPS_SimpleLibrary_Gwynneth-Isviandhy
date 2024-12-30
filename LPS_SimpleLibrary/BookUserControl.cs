@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -105,7 +106,7 @@ namespace LPS_SimpleLibrary
             using (var command = new MySqlCommand(query, connection))
             {
                 command.Parameters.AddWithValue("@nama", textBoxName.Text);
-                command.Parameters.AddWithValue("@pass", textBoxGenre.Text);
+                command.Parameters.AddWithValue("@genre", textBoxGenre.Text);
                 command.Parameters.AddWithValue("@author", textBoxAuthor.Text);
 
                 command.Parameters.AddWithValue("@idMember", idBook);
@@ -271,6 +272,58 @@ namespace LPS_SimpleLibrary
 
         private void dataGridViewBook_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            //if (e.RowIndex >= 0)
+            //{
+            //    isEditMode = true;
+
+            //    currentBookId = dataGridViewBook.Rows[e.RowIndex].Cells["id_book"].Value.ToString();
+            //    textBoxName.Text = dataGridViewBook.Rows[e.RowIndex].Cells["name_book"].Value.ToString();
+            //    textBoxGenre.Text = dataGridViewBook.Rows[e.RowIndex].Cells["genre_book"].Value.ToString();
+            //    textBoxAuthor.Text = dataGridViewBook.Rows[e.RowIndex].Cells["author_book"].Value.ToString();
+
+            //    tabControl1.TabPages.Remove(tabPageBookList);
+            //    tabControl1.TabPages.Add(tabPageBookDetail);
+            //}
+        }
+
+        private void buttonDelete_Click(object sender, EventArgs e)
+        {
+            DeleteBookRecord(currentBookId);
+        }
+
+        private void textBoxSearch_TextChanged(object sender, EventArgs e)
+        {
+            string searchValue = textBoxSearch.Text;
+            SearchDataGridView(searchValue, searchValue, searchValue, searchValue);
+        }
+
+        private void buttonEdit_Click(object sender, EventArgs e)
+        {
+            isEditMode = true; // Set to Edit mode
+            tabControl1.TabPages.Remove(tabPageBookList);
+            tabControl1.TabPages.Add(tabPageBookDetail);
+
+            if (dataGridViewBook.SelectedCells.Count > 0)
+            {
+                // Get the selected cell and find its row
+                var selectedCell = dataGridViewBook.SelectedCells[0];
+                var selectedRow = selectedCell.OwningRow; // Get the row that contains the selected cell
+
+                currentBookId = selectedRow.Cells["id_book"].Value.ToString();  // Store loanId here
+
+                textBoxName.Text = selectedRow.Cells["name_book"].Value.ToString();
+                textBoxGenre.Text = selectedRow.Cells["genre_book"].Value.ToString();
+                textBoxAuthor.Text = selectedRow.Cells["author_book"].Value.ToString();
+
+            }
+            else
+            {
+                MessageBox.Show("Please select a cell to edit.");
+            }
+        }
+
+        private void dataGridViewBook_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
             if (e.RowIndex >= 0)
             {
                 isEditMode = true;
@@ -283,17 +336,6 @@ namespace LPS_SimpleLibrary
                 tabControl1.TabPages.Remove(tabPageBookList);
                 tabControl1.TabPages.Add(tabPageBookDetail);
             }
-        }
-
-        private void buttonDelete_Click(object sender, EventArgs e)
-        {
-            DeleteBookRecord(currentBookId);
-        }
-
-        private void textBoxSearch_TextChanged(object sender, EventArgs e)
-        {
-            string searchValue = textBoxSearch.Text;
-            SearchDataGridView(searchValue, searchValue, searchValue, searchValue);
         }
     }
 }

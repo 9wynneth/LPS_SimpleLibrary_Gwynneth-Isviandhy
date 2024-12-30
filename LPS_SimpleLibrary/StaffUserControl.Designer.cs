@@ -37,13 +37,13 @@
             this.buttonSave = new System.Windows.Forms.Button();
             this.dataGridViewStaff = new System.Windows.Forms.DataGridView();
             this.tabPageStaffDetail = new System.Windows.Forms.TabPage();
+            this.textBoxPassword = new System.Windows.Forms.TextBox();
+            this.textBoxName = new System.Windows.Forms.TextBox();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPageStaffList = new System.Windows.Forms.TabPage();
             this.textBoxSearch = new System.Windows.Forms.TextBox();
             this.lab = new System.Windows.Forms.Label();
-            this.textBoxName = new System.Windows.Forms.TextBox();
-            this.textBoxPassword = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewStaff)).BeginInit();
             this.tabPageStaffDetail.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -58,6 +58,7 @@
             this.label2.Size = new System.Drawing.Size(82, 20);
             this.label2.TabIndex = 2;
             this.label2.Text = "Password:";
+            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // label1
             // 
@@ -67,6 +68,7 @@
             this.label1.Size = new System.Drawing.Size(94, 20);
             this.label1.TabIndex = 0;
             this.label1.Text = "Staff Name:";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // buttonDelete
             // 
@@ -86,6 +88,7 @@
             this.buttonEdit.TabIndex = 7;
             this.buttonEdit.Text = "Edit";
             this.buttonEdit.UseVisualStyleBackColor = true;
+            this.buttonEdit.Click += new System.EventHandler(this.buttonEdit_Click);
             // 
             // buttonAdd
             // 
@@ -105,6 +108,7 @@
             this.labelDataRow.Size = new System.Drawing.Size(51, 20);
             this.labelDataRow.TabIndex = 5;
             this.labelDataRow.Text = "label1";
+            this.labelDataRow.Click += new System.EventHandler(this.labelDataRow_Click);
             // 
             // buttonSave
             // 
@@ -126,6 +130,7 @@
             this.dataGridViewStaff.Size = new System.Drawing.Size(621, 240);
             this.dataGridViewStaff.TabIndex = 4;
             this.dataGridViewStaff.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewStaff_CellClick);
+            this.dataGridViewStaff.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewStaff_CellContentClick);
             // 
             // tabPageStaffDetail
             // 
@@ -142,6 +147,25 @@
             this.tabPageStaffDetail.TabIndex = 1;
             this.tabPageStaffDetail.Text = "Staff Details";
             this.tabPageStaffDetail.UseVisualStyleBackColor = true;
+            this.tabPageStaffDetail.Click += new System.EventHandler(this.tabPageStaffDetail_Click);
+            // 
+            // textBoxPassword
+            // 
+            this.textBoxPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxPassword.Location = new System.Drawing.Point(21, 167);
+            this.textBoxPassword.Name = "textBoxPassword";
+            this.textBoxPassword.Size = new System.Drawing.Size(235, 28);
+            this.textBoxPassword.TabIndex = 9;
+            this.textBoxPassword.TextChanged += new System.EventHandler(this.textBoxPassword_TextChanged);
+            // 
+            // textBoxName
+            // 
+            this.textBoxName.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxName.Location = new System.Drawing.Point(21, 79);
+            this.textBoxName.Name = "textBoxName";
+            this.textBoxName.Size = new System.Drawing.Size(235, 28);
+            this.textBoxName.TabIndex = 8;
+            this.textBoxName.TextChanged += new System.EventHandler(this.textBoxName_TextChanged);
             // 
             // buttonCancel
             // 
@@ -163,6 +187,7 @@
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(750, 393);
             this.tabControl1.TabIndex = 5;
+            this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             // 
             // tabPageStaffList
             // 
@@ -180,6 +205,7 @@
             this.tabPageStaffList.TabIndex = 0;
             this.tabPageStaffList.Text = "Staff List";
             this.tabPageStaffList.UseVisualStyleBackColor = true;
+            this.tabPageStaffList.Click += new System.EventHandler(this.tabPageStaffList_Click);
             // 
             // textBoxSearch
             // 
@@ -198,22 +224,7 @@
             this.lab.Size = new System.Drawing.Size(64, 20);
             this.lab.TabIndex = 2;
             this.lab.Text = "Search:";
-            // 
-            // textBoxName
-            // 
-            this.textBoxName.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxName.Location = new System.Drawing.Point(21, 79);
-            this.textBoxName.Name = "textBoxName";
-            this.textBoxName.Size = new System.Drawing.Size(235, 28);
-            this.textBoxName.TabIndex = 8;
-            // 
-            // textBoxPassword
-            // 
-            this.textBoxPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxPassword.Location = new System.Drawing.Point(21, 167);
-            this.textBoxPassword.Name = "textBoxPassword";
-            this.textBoxPassword.Size = new System.Drawing.Size(235, 28);
-            this.textBoxPassword.TabIndex = 9;
+            this.lab.Click += new System.EventHandler(this.lab_Click);
             // 
             // StaffUserControl
             // 

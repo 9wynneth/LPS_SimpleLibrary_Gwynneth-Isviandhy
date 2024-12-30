@@ -37,7 +37,7 @@ namespace LPS_SimpleLibrary
             isEditMode = false; // Set to Add mode
             tabControl1.TabPages.Remove(tabPageLoanList);
             tabControl1.TabPages.Add(tabPageLoanDetail);
-
+            LoadMemberAndBookData();
             // Clear comboboxes and date pickers for new entry
             comboBoxBooks.SelectedIndex = -1;
             comboBoxMembers.SelectedIndex = -1;
@@ -49,7 +49,7 @@ namespace LPS_SimpleLibrary
             isEditMode = true; // Set to Edit mode
             tabControl1.TabPages.Remove(tabPageLoanList);
             tabControl1.TabPages.Add(tabPageLoanDetail);
-
+            LoadMemberAndBookData();
             if (dataGridViewLoan.SelectedCells.Count > 0)
             {
                 // Get the selected cell and find its row
@@ -71,6 +71,23 @@ namespace LPS_SimpleLibrary
 
         private void buttonSave_Click(object sender, EventArgs e)
         {
+
+            string selectedMember = comboBoxMembers.SelectedItem?.ToString()?.Trim() ?? string.Empty;
+            string selectedBook = comboBoxBooks.SelectedItem?.ToString()?.Trim() ?? string.Empty; 
+
+
+            if (string.IsNullOrEmpty(selectedMember) || string.IsNullOrEmpty(selectedBook))
+            {
+                MessageBox.Show("Please select both the member and books.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (CheckForDuplicates(selectedMember, selectedBook))
+            {
+                MessageBox.Show("A loan with the same member, books, and date already exists.", "Duplicate Record", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             if (!isEditMode)
             {
                 // Add new loan record
@@ -98,6 +115,7 @@ namespace LPS_SimpleLibrary
 
         private void buttonDelete_Click(object sender, EventArgs e)
         {
+            LoadMemberAndBookData();
             if (dataGridViewLoan.SelectedRows.Count > 0)
             {
                 // Get the selected loan ID from the DataGridView (assuming it's in the first column)
@@ -132,8 +150,8 @@ namespace LPS_SimpleLibrary
                 adapter.Fill(loanTable);
                 dataGridViewLoan.DataSource = loanTable;
                 
-                dataGridViewLoan.Columns["id_member"].Visible = false;
-                dataGridViewLoan.Columns["id_book"].Visible = false;
+                //dataGridViewLoan.Columns["id_member"].Visible = false;
+                //dataGridViewLoan.Columns["id_book"].Visible = false;
 
                 //labelDataRow.Text = $"Showing {loanTable.Rows.Count.ToString()} rows" ;
                 if (loanTable.Rows.Count == 0)
@@ -270,7 +288,7 @@ namespace LPS_SimpleLibrary
             }
 
             // Load book data
-            string queryBooks = "SELECT id_book, name_book FROM book where status_book = 0;";
+            string queryBooks = "SELECT id_book, name_book FROM book where status_book = 0 and delete_book = 0;";
             using (var connection = new MySqlConnection(connectionString))
             using (var command = new MySqlCommand(queryBooks, connection))
             using (var adapter = new MySqlDataAdapter(command))
@@ -291,17 +309,16 @@ namespace LPS_SimpleLibrary
                             l.dateborrowed_loan, l.duedate_loan from loan l
                             left join `member` m on m.id_member = l.id_member 
                             left join book b on b.id_book = l.id_book           
-                            where l.id_loan like @Loanid or l.id_member like @Memberid or 
-                            l.id_book like @Bookid or m.nama_member like @MemberName or 
+                            where l.id_loan like @Loanid or m.nama_member like @MemberName or 
                             b.name_book like @BookName or
                             l.dateborrowed_loan like @DateBorrowLoan or l.duedate_loan like @DueDateLoan;     ";
 
-            DataTable dataTable = new DataTable();
 
             using (var connection = new MySqlConnection(connectionString))
             using (var command = new MySqlCommand(query, connection))
             using (var adapter = new MySqlDataAdapter(command))
             {
+              
                 command.Parameters.AddWithValue("@Loanid", "%" + loanID + "%");
                 command.Parameters.AddWithValue("@Memberid", "%" + memberID + "%");
                 command.Parameters.AddWithValue("@Bookid", "%" + bookID + "%");
@@ -310,58 +327,66 @@ namespace LPS_SimpleLibrary
                 command.Parameters.AddWithValue("@DateBorrowLoan", "%" + dateBorrowLoan + "%");
                 command.Parameters.AddWithValue("@DueDateLoan", "%" + dueDateLoan + "%");
 
+                DataTable dataTable = new DataTable();
 
                 connection.Open();
                 adapter.Fill(dataTable);
-                dataGridViewLoan.Columns["id_member"].Visible = false;
-                dataGridViewLoan.Columns["id_book"].Visible = false;
+                if (dataGridViewLoan.Columns["id_member"] != null)
+                {
+                    dataGridViewLoan.Columns["id_member"].Visible = false;
+                }
+                if (dataGridViewLoan.Columns["id_book"] != null)
+                {
+                    dataGridViewLoan.Columns["id_book"].Visible = false;
+                }
+
+                if (dataTable.Rows.Count == 0)
+                {
+                    dataGridViewLoan.DataSource = null;
+                    dataGridViewLoan.Rows.Clear();
+                    dataGridViewLoan.Columns.Clear();
+                    dataGridViewLoan.Columns.Add("Message", "");
+                    dataGridViewLoan.Rows.Add("No records found.");
+                    dataGridViewLoan.ClearSelection();
+                    Console.WriteLine("00000");
+                    labelDataRow.Text = $"Showing {dataTable.Rows.Count.ToString()} rows";
+
+                }
+                else
+                {
+                    dataGridViewLoan.DataSource = dataTable;
+
+                    dataGridViewLoan.Columns["id_loan"].HeaderText = "Loan ID";
+                    dataGridViewLoan.Columns["nama_member"].HeaderText = "Member Name";
+                    dataGridViewLoan.Columns["name_book"].HeaderText = "Book Title";
+                    dataGridViewLoan.Columns["dateborrowed_loan"].HeaderText = "Date Borrow";
+                    dataGridViewLoan.Columns["duedate_loan"].HeaderText = "Due Date";
+                    //dataGridViewMember.Columns["delete_member"].HeaderText = "Status";
+
+
+                    labelDataRow.Text = $"Showing {dataTable.Rows.Count.ToString()} rows";
+
+                }
             }
-            if (dataTable.Rows.Count == 0)
-            {
-                dataGridViewLoan.DataSource = null;
-                dataGridViewLoan.Rows.Clear();
-                dataGridViewLoan.Columns.Clear();
-                dataGridViewLoan.Columns.Add("Message", "");
-                dataGridViewLoan.Rows.Add("No records found.");
-                dataGridViewLoan.ClearSelection();
-                Console.WriteLine("00000");
-                labelDataRow.Text = $"Showing {dataTable.Rows.Count.ToString()} rows";
-
-            }
-            else
-            {
-                dataGridViewLoan.DataSource = dataTable;
-
-                dataGridViewLoan.Columns["id_loan"].HeaderText = "Loan ID";
-                dataGridViewLoan.Columns["nama_member"].HeaderText = "Member Name";
-                dataGridViewLoan.Columns["name_book"].HeaderText = "Book Title";
-                dataGridViewLoan.Columns["dateborrowed_loan"].HeaderText = "Date Borrow";
-                dataGridViewLoan.Columns["duedate_loan"].HeaderText = "Due Date";
-                //dataGridViewMember.Columns["delete_member"].HeaderText = "Status";
-
-
-                labelDataRow.Text = $"Showing {dataTable.Rows.Count.ToString()} rows";
-
-            }
+            
             // Update the DataGridView
             //dataGridViewLoan.DataSource = dataTable;
             //labelDataRow.Text = $"Showing {dataTable.Rows.Count} rows.";
 
         }
 
-        private bool CheckForDuplicates(string idBook, string idMember, DateTime date)
+        private bool CheckForDuplicates(string idBook, string idMember)
         {
             string connectionString = "server=localhost;uid=root;pwd=;database=lps_library";
             string query = @"SELECT COUNT(*) 
                      FROM loan 
-                     WHERE id_book = @idBook AND id_member = @member AND dateborrowed_loan = @date AND delete_staff = 0";
+                     WHERE id_book = @idBook AND id_member = @member AND delete_loan = 0";
 
             using (var connection = new MySqlConnection(connectionString))
             using (var command = new MySqlCommand(query, connection))
             {
                 command.Parameters.AddWithValue("@idBook", idBook);
                 command.Parameters.AddWithValue("@member", idMember);
-                command.Parameters.AddWithValue("@date", date);
 
 
                 connection.Open();
