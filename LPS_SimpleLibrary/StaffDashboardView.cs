@@ -68,6 +68,9 @@ namespace LPS_SimpleLibrary
             staffControl.Visible = false;
             memberControl.Visible = false;
             bookControl.Visible = false;
+            BookUserControl bookManager = new BookUserControl();
+
+            bookManager.LoadBookData();
 
         }
         private void button4_Click(object sender, EventArgs e)

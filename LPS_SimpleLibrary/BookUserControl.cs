@@ -25,7 +25,7 @@ namespace LPS_SimpleLibrary
         }
 
 
-        private void LoadBookData()
+        public void LoadBookData()
         {
             string connectionString = "server=localhost;uid=root;pwd=;database=lps_library";
 
