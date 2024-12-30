@@ -90,11 +90,11 @@ namespace LPS_SimpleLibrary
                          WHEN status_book = 1 THEN 'Not Available'
                      END AS status_book 
                      FROM book
-                     WHERE id_book LIKE @id 
+                     WHERE delete_book = 0 and ( id_book LIKE @id 
                         OR name_book LIKE @name 
                         OR genre_book LIKE @genre 
                         OR author_book LIKE @author 
-                        OR status_book LIKE @status
+                        OR status_book LIKE @status)
                      ORDER BY 1 ASC";
 
             DataTable dataTable = new DataTable();
@@ -178,7 +178,7 @@ namespace LPS_SimpleLibrary
                          WHEN status_book = 1 THEN 'Not Available'
                      END AS status_book 
                      FROM book
-                     WHERE genre_book LIKE @genre";
+                     WHERE delete_book = 0 and genre_book LIKE @genre;";
 
             // If the selected genre is "All", skip the filter on genre
             if (selectedGenre == "All")
@@ -188,7 +188,7 @@ namespace LPS_SimpleLibrary
                              WHEN status_book = 0 THEN 'Available'
                              WHEN status_book = 1 THEN 'Not Available'
                          END AS status_book 
-                         FROM book";
+                         FROM book where delete_book = 0;";
             }
 
             DataTable filteredData = new DataTable();
