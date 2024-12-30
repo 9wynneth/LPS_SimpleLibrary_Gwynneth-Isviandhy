@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics.Metrics;
 using System.Drawing;
 using System.Linq;
 using System.Runtime.Remoting.Metadata.W3cXsd2001;
@@ -73,24 +74,13 @@ namespace LPS_SimpleLibrary
         }
         private void InsertNewMemberRecord()
         {
-            string connectionString = "server=localhost;uid=root;pwd=;database=lps_library";
-
-            string query = @"INSERT INTO `member` (nama_member, email_member) 
-                            VALUES (@nama, @email);
-                             ";
-
-            using (var connection = new MySqlConnection(connectionString))
-            using (var command = new MySqlCommand(query, connection))
+            var newMember = new MemberClass
             {
-                command.Parameters.AddWithValue("@nama", textBoxName.Text);
-                command.Parameters.AddWithValue("@email", textBoxEmail.Text);
+                Name = textBoxName.Text,
+                Email = textBoxEmail.Text
+            };
 
-                connection.Open();
-                command.ExecuteNonQuery();
-
-            }
-
-            // Reload loan data
+            newMember.Insert();
             LoadMemberData();
             tabControl1.TabPages.Remove(tabPageMemberDetail);
         }
@@ -99,14 +89,14 @@ namespace LPS_SimpleLibrary
         {
             string connectionString = "server=localhost;uid=root;pwd=;database=lps_library";
             string query = "UPDATE `member` SET nama_member = @nama, email_member = @pass " +
-                "           WHERE id_member = @idMember;";
+                           "WHERE id_member = @idMember;";
 
             using (var connection = new MySqlConnection(connectionString))
             using (var command = new MySqlCommand(query, connection))
             {
                 command.Parameters.AddWithValue("@nama", textBoxName.Text);
                 command.Parameters.AddWithValue("@pass", textBoxEmail.Text);
-                command.Parameters.AddWithValue("@idMember", idMember);
+                command.Parameters.AddWithValue("@idMember", idMember);  // idMember is treated as a string
 
                 connection.Open();
                 command.ExecuteNonQuery();
@@ -115,6 +105,7 @@ namespace LPS_SimpleLibrary
             LoadMemberData();
             tabControl1.TabPages.Remove(tabPageMemberDetail);
         }
+
         private void DeleteMemberRecord(string idMember)
         {
             string connectionString = "server=localhost;uid=root;pwd=;database=lps_library";
@@ -122,14 +113,14 @@ namespace LPS_SimpleLibrary
             if (MessageBox.Show("Are you sure you want to delete this member record?", "Confirm Delete", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 string queryDelete = @" 
-                                       UPDATE `member` 
-                                    SET delete_member = 1 
-                                    WHERE id_member = @idMember      ";
+                               UPDATE `member` 
+                            SET delete_member = 1 
+                            WHERE id_member = @idMember;";
 
                 using (var connection = new MySqlConnection(connectionString))
                 using (var command = new MySqlCommand(queryDelete, connection))
                 {
-                    command.Parameters.AddWithValue("@idMember", idMember);
+                    command.Parameters.AddWithValue("@idMember", idMember);  // idMember is treated as a string
 
                     connection.Open();
                     command.ExecuteNonQuery();
@@ -138,6 +129,7 @@ namespace LPS_SimpleLibrary
                 LoadMemberData();
             }
         }
+
 
         private void SearchDataGridView(string name, string email)
         {
@@ -296,9 +288,8 @@ namespace LPS_SimpleLibrary
                 var selectedCell = dataGridViewMember.SelectedCells[0];
                 var selectedRow = selectedCell.OwningRow; 
 
-                currentMemberId = selectedRow.Cells["id_member"].Value.ToString();  // Store loanId here
+                currentMemberId = selectedRow.Cells["id_member"].Value.ToString();  
 
-                // Populate combo boxes and DateTimePicker with selected loan data
                 textBoxName.Text = selectedRow.Cells["nama_member"].Value.ToString();
                 textBoxEmail.Text = selectedRow.Cells["email_member"].Value.ToString();
             }

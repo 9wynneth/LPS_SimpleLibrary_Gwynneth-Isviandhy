@@ -12,7 +12,7 @@ using MySql.Data.MySqlClient;
 
 namespace LPS_SimpleLibrary
 {
-    public partial class StaffUserControl : UserControl
+    public partial class StaffUserControl : BaseUserControl
     {
         private bool isEditMode = false;
         private string currentStaffId; 
@@ -21,8 +21,7 @@ namespace LPS_SimpleLibrary
         {
             InitializeComponent();
             LoadStaffData();
-            dataGridViewStaff.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-
+            dataGridViewStaff.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             tabControl1.TabPages.Remove(tabPageStaffDetail);
 
         }
@@ -30,76 +29,32 @@ namespace LPS_SimpleLibrary
 
         private void LoadStaffData()
         {
-            string connectionString = "server=localhost;uid=root;pwd=;database=lps_library";
-
-            string query = "select id_staff, nama_staff, password_staff from staff where delete_staff = 0;";
-
-            using (var connection = new MySqlConnection(connectionString))
-            using (var command = new MySqlCommand(query, connection))
-            using (var adapter = new MySqlDataAdapter(command))
-            {
-                DataTable staffTable = new DataTable();
-                connection.Open();
-                adapter.Fill(staffTable);
-                //dataGridViewStaff.DataSource = staffTable;
-
-                //labelDataRow.Text = $"Showing {staffTable.Rows.Count.ToString()} rows";
-                if (staffTable.Rows.Count == 0)
-                {
-                    dataGridViewStaff.DataSource = null;
-                    dataGridViewStaff.Rows.Clear();
-                    dataGridViewStaff.Columns.Clear();
-                    dataGridViewStaff.Columns.Add("Message", "");
-                    dataGridViewStaff.Rows.Add("No records found.");
-                    dataGridViewStaff.ClearSelection();
-                    Console.WriteLine("00000");
-                    labelDataRow.Text = $"Showing {staffTable.Rows.Count.ToString()} rows";
-
-                }
-                else
-                {
-                    dataGridViewStaff.DataSource = staffTable;
-
-                    dataGridViewStaff.Columns["id_staff"].HeaderText = "Staff ID";
-                    dataGridViewStaff.Columns["nama_staff"].HeaderText = "Name";
-                    dataGridViewStaff.Columns["password_staff"].HeaderText = "Password";
-
-
-                    labelDataRow.Text = $"Showing {staffTable.Rows.Count.ToString()} rows";
-
-                }
-            }
+            string query = "SELECT id_staff, nama_staff, password_staff FROM staff WHERE delete_staff = 0;";
+            string[] columns = { "Staff ID", "Name", "Password" };
+            LoadData(query, dataGridViewStaff, columns);
             dataGridViewStaff.Columns["id_staff"].Visible = false;
-
         }
+
         private void InsertNewStaffRecord()
         {
-            string connectionString = "server=localhost;uid=root;pwd=;database=lps_library";
-
             string query = @"INSERT INTO staff (nama_staff, password_staff) 
-                            VALUES (@nama, @password);
-                             ";
-
+                             VALUES (@nama, @password);";
             using (var connection = new MySqlConnection(connectionString))
             using (var command = new MySqlCommand(query, connection))
             {
-                command.Parameters.AddWithValue("@nama",textBoxName.Text); 
+                command.Parameters.AddWithValue("@nama", textBoxName.Text);
                 command.Parameters.AddWithValue("@password", textBoxPassword.Text);
 
                 connection.Open();
                 command.ExecuteNonQuery();
             }
-
-            // Reload loan data
             LoadStaffData();
-            tabControl1.TabPages.Remove(tabPageStaffDetail); 
+            tabControl1.TabPages.Remove(tabPageStaffDetail);
         }
 
         private void UpdateStaffData(string idStaff)
         {
-            string connectionString = "server=localhost;uid=root;pwd=;database=lps_library";
             string query = "UPDATE staff SET nama_staff = @nama, password_staff = @pass WHERE id_staff = @idStaff;";
-
             using (var connection = new MySqlConnection(connectionString))
             using (var command = new MySqlCommand(query, connection))
             {
@@ -110,21 +65,15 @@ namespace LPS_SimpleLibrary
                 connection.Open();
                 command.ExecuteNonQuery();
             }
-
             LoadStaffData();
             tabControl1.TabPages.Remove(tabPageStaffDetail);
         }
+
         private void DeleteStaffRecord(string idStaff)
         {
-            string connectionString = "server=localhost;uid=root;pwd=;database=lps_library";
-
             if (MessageBox.Show("Are you sure you want to delete this staff record?", "Confirm Delete", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                string queryDelete = @" 
-                                       UPDATE staff 
-                                    SET delete_staff = 1 
-                                    WHERE id_staff = @idStaff      ";
-
+                string queryDelete = @"UPDATE staff SET delete_staff = 1 WHERE id_staff = @idStaff";
                 using (var connection = new MySqlConnection(connectionString))
                 using (var command = new MySqlCommand(queryDelete, connection))
                 {
@@ -133,7 +82,6 @@ namespace LPS_SimpleLibrary
                     connection.Open();
                     command.ExecuteNonQuery();
                 }
-
                 LoadStaffData();
             }
         }
@@ -207,7 +155,7 @@ namespace LPS_SimpleLibrary
 
                 connection.Open();
                 int count = Convert.ToInt32(command.ExecuteScalar());
-                return count > 0; // Return true if duplicates exist
+                return count > 0; 
             }
         }
 
