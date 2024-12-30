@@ -23,7 +23,7 @@ namespace LPS_SimpleLibrary
             string connectionString = "server=localhost;uid=root;pwd=;database=lps_library";
 
             // SQL query to count total books
-            string bookQuery = "SELECT COUNT(*) FROM book";
+            string bookQuery = "SELECT COUNT(*) FROM book where status_book = 0 and delete_book = 0;";
             int totalBooks = 0;
             using (var connection = new MySqlConnection(connectionString))
             {
@@ -35,7 +35,7 @@ namespace LPS_SimpleLibrary
             }
 
             // SQL query to count total members
-            string memberQuery = "SELECT COUNT(*) FROM member";
+            string memberQuery = "SELECT COUNT(*) FROM member where delete_member = 0;";
             int totalMembers = 0;
             using (var connection = new MySqlConnection(connectionString))
             {
