@@ -92,7 +92,7 @@ namespace LPS_SimpleLibrary
                     connection.Open();
 
                     // Query to check if the provided ID and password match a staff member
-                    string query = "SELECT COUNT(*) FROM STAFF WHERE nama_staff = @nama AND PASSWORD_STAFF = @password";
+                    string query = "SELECT COUNT(*) FROM STAFF WHERE nama_staff = @nama AND PASSWORD_STAFF = @password and delete_staff = 0;";
                     using (var command = new MySqlCommand(query, connection))
                     {
                         // Add parameters to avoid SQL injection
