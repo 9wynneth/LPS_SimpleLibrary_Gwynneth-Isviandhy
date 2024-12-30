@@ -76,19 +76,16 @@ Setelah berhasil login, staff dapat mengakses halaman khusus untuk mengelola dat
 ![471459860_1795748104571017_5462642717147078027_n](https://github.com/user-attachments/assets/62398df8-441f-49a2-89e4-9c32ad2a00a2)
 
 ### SQL Syntax
-🔗 https://drive.google.com/file/d/1i0SDmkAhGwtcojzc69HuYRM59IDoZrmO/view?usp=sharing
+🔗 https://drive.google.com/file/d/135SGVTR9LhHaYSOEfqkUDphO8doXVTnX/view?usp=sharing 
 
 ### Tabel Database
-🔗
+🔗 https://docs.google.com/document/d/1mO8Jw-GVX7UQbMcndoqXhDKuFMXVJ0ow-klPQVS6ugk/edit?usp=sharing
 
 ---
 ## User Scenario Testing
 ![Untitled spreadsheet - Sheet1-3_page-0001](https://github.com/user-attachments/assets/e3b06589-34e7-4d4b-84e3-8096e84ed9e2)
 ![Untitled spreadsheet - Sheet1-3_page-0002](https://github.com/user-attachments/assets/4f0ced55-644f-4496-97d2-f447547d1532)
 ![Untitled spreadsheet - Sheet1-3_page-0003](https://github.com/user-attachments/assets/5880905f-5afd-4e10-89a3-dbadb7282712)
-
 🔗 https://drive.google.com/file/d/1v2lIWziNalbe_FLFbw7O_MhDpShVTRv-/view?usp=share_link
-
-
 
 Terima kasih 🚀
