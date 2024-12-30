@@ -37,11 +37,37 @@ namespace LPS_SimpleLibrary
                 DataTable memberTable = new DataTable();
                 connection.Open();
                 adapter.Fill(memberTable);
-                dataGridViewMember.DataSource = memberTable;
-                //dataGridViewMember.Columns["id_member"].Visible = false;
+                if (memberTable.Rows.Count == 0)
+                {
+                    dataGridViewMember.DataSource = null;
+                    dataGridViewMember.Rows.Clear();
+                    dataGridViewMember.Columns.Clear();
+                    dataGridViewMember.Columns.Add("Message", "");
+                    dataGridViewMember.Rows.Add("No records found.");
+                    dataGridViewMember.ClearSelection();
+                    Console.WriteLine("00000");
+                    labelDataRow.Text = $"Showing {memberTable.Rows.Count.ToString()} rows";
 
-                labelDataRow.Text = $"Showing {memberTable.Rows.Count.ToString()} rows";
+                }
+                else
+                {
+                    dataGridViewMember.DataSource = memberTable;
+
+                    dataGridViewMember.Columns["id_member"].HeaderText = "Member ID";
+                    dataGridViewMember.Columns["nama_member"].HeaderText = "Name";
+                    dataGridViewMember.Columns["email_member"].HeaderText = "Email";
+                    //dataGridViewMember.Columns["delete_member"].HeaderText = "Status";
+
+
+                    labelDataRow.Text = $"Showing {memberTable.Rows.Count.ToString()} rows";
+
+                }
+                //dataGridViewMember.Columns["id_member"].Visible = false;
+                //dataGridViewMember.DataSource = memberTable;
+                //labelDataRow.Text = $"Showing {memberTable.Rows.Count.ToString()} rows";
             }
+
+            
 
         }
         private void InsertNewMemberRecord()
@@ -60,6 +86,7 @@ namespace LPS_SimpleLibrary
 
                 connection.Open();
                 command.ExecuteNonQuery();
+
             }
 
             // Reload loan data
@@ -135,10 +162,53 @@ namespace LPS_SimpleLibrary
 
             }
 
-            dataGridViewMember.DataSource = dataTable;
-            labelDataRow.Text = $"Showing {dataTable.Rows.Count} rows.";
+            if (dataTable.Rows.Count == 0)
+            {
+                dataGridViewMember.DataSource = null;
+                dataGridViewMember.Rows.Clear();
+                dataGridViewMember.Columns.Clear();
+                dataGridViewMember.Columns.Add("Message", "");
+                dataGridViewMember.Rows.Add("No records found.");
+                dataGridViewMember.ClearSelection();
+                Console.WriteLine("00000");
+                labelDataRow.Text = $"Showing {dataTable.Rows.Count.ToString()} rows";
+
+            }
+            else
+            {
+                dataGridViewMember.DataSource = dataTable;
+
+                dataGridViewMember.Columns["id_member"].HeaderText = "Member ID";
+                dataGridViewMember.Columns["nama_member"].HeaderText = "Name";
+                dataGridViewMember.Columns["email_member"].HeaderText = "Email";
+                //dataGridViewMember.Columns["delete_member"].HeaderText = "Status";
+
+
+                labelDataRow.Text = $"Showing {dataTable.Rows.Count.ToString()} rows";
+
+            }
 
         }
+
+        private bool CheckForDuplicates(string name, string email)
+        {
+            string connectionString = "server=localhost;uid=root;pwd=;database=lps_library";
+            string query = @"SELECT COUNT(*) 
+                     FROM `member` 
+                     WHERE nama_member = @name AND email_member = @pass AND delete_member = 0";
+
+            using (var connection = new MySqlConnection(connectionString))
+            using (var command = new MySqlCommand(query, connection))
+            {
+                command.Parameters.AddWithValue("@name", name);
+                command.Parameters.AddWithValue("@pass", email);
+
+                connection.Open();
+                int count = Convert.ToInt32(command.ExecuteScalar());
+                return count > 0; // Return true if duplicates exist
+            }
+        }
+
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
@@ -158,6 +228,22 @@ namespace LPS_SimpleLibrary
 
         private void buttonSave_Click(object sender, EventArgs e)
         {
+            string name = textBoxName.Text.Trim();
+            string email = textBoxEmail.Text.Trim();
+
+            // Check if both fields are filled
+            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(email))
+            {
+                MessageBox.Show("Both Name and Email fields must be filled.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Check for duplicates
+            if (CheckForDuplicates(name, email))
+            {
+                MessageBox.Show("A member with the same Name and Email already exists.", "Duplicate Record", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             if (!isEditMode)
             {
                 InsertNewMemberRecord();

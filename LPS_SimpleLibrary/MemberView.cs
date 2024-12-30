@@ -53,9 +53,30 @@ namespace LPS_SimpleLibrary
                 adapter.Fill(dataTable);
             }
 
-            // Bind the DataTable to the DataGridView
-            dataGridViewBookCollection.DataSource = dataTable;
-            labelData.Text = $"Showing {dataTable.Rows.Count} rows.";
+            if (dataTable.Rows.Count == 0)
+            {
+                dataGridViewBookCollection.DataSource = null;
+                dataGridViewBookCollection.Rows.Clear();
+                dataGridViewBookCollection.Columns.Clear();
+                dataGridViewBookCollection.Columns.Add("Message", "No Records");
+                dataGridViewBookCollection.Rows.Add("No records found.");
+                dataGridViewBookCollection.ClearSelection();
+                Console.WriteLine("00000");
+            }
+            else
+            {
+                dataGridViewBookCollection.DataSource = dataTable;
+
+                dataGridViewBookCollection.Columns["id_book"].HeaderText = "Book ID";
+                dataGridViewBookCollection.Columns["name_book"].HeaderText = "Title";
+                dataGridViewBookCollection.Columns["genre_book"].HeaderText = "Genre";
+                dataGridViewBookCollection.Columns["author_book"].HeaderText = "Author";
+                dataGridViewBookCollection.Columns["status_book"].HeaderText = "Status";
+
+                labelData.Text = $"Showing {dataTable.Rows.Count} rows.";
+                Console.WriteLine("masukkkkkk");
+
+            }
 
         }
 
@@ -92,9 +113,31 @@ namespace LPS_SimpleLibrary
                 adapter.Fill(dataTable);
             }
 
-            // Update the DataGridView
-            dataGridViewBookCollection.DataSource = dataTable;
-            labelData.Text = $"Showing {dataTable.Rows.Count} rows.";
+
+            if (dataTable.Rows.Count == 0)
+            {
+                dataGridViewBookCollection.DataSource = null;
+                dataGridViewBookCollection.Rows.Clear();
+                dataGridViewBookCollection.Columns.Clear();
+                dataGridViewBookCollection.Columns.Add("Message", "");
+                dataGridViewBookCollection.Rows.Add("No records found.");
+                dataGridViewBookCollection.ClearSelection();
+                Console.WriteLine("00000");
+            }
+            else
+            {
+                dataGridViewBookCollection.DataSource = dataTable;
+
+                dataGridViewBookCollection.Columns["id_book"].HeaderText = "Book ID";
+                dataGridViewBookCollection.Columns["name_book"].HeaderText = "Title";
+                dataGridViewBookCollection.Columns["genre_book"].HeaderText = "Genre";
+                dataGridViewBookCollection.Columns["author_book"].HeaderText = "Author";
+                dataGridViewBookCollection.Columns["status_book"].HeaderText = "Status";
+
+                labelData.Text = $"Showing {dataTable.Rows.Count} rows.";
+                Console.WriteLine("masukkkkkk");
+
+            }
 
         }
 

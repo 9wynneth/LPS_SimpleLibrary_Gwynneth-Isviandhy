@@ -120,7 +120,8 @@ namespace LPS_SimpleLibrary
         {
             string connectionString = "server=localhost;uid=root;pwd=;database=lps_library";
 
-            string query = "select l.id_loan,l.id_member, l.id_book, m.nama_member, b.name_book, l.dateborrowed_loan, l.duedate_loan from loan l\r\nleft join `member` m on m.id_member = l.id_member left join book b on b.id_book = l.id_book;";
+            string query = "select l.id_loan,l.id_member, l.id_book, m.nama_member, b.name_book, l.dateborrowed_loan, l.duedate_loan from loan l\r\nleft join `member` m on m.id_member = l.id_member left join book b on b.id_book = l.id_book" +
+                "           where delete_loan = 0;";
 
             using (var connection = new MySqlConnection(connectionString))
             using (var command = new MySqlCommand(query, connection))
@@ -134,7 +135,34 @@ namespace LPS_SimpleLibrary
                 dataGridViewLoan.Columns["id_member"].Visible = false;
                 dataGridViewLoan.Columns["id_book"].Visible = false;
 
-                labelDataRow.Text = $"Showing {loanTable.Rows.Count.ToString()} rows" ;
+                //labelDataRow.Text = $"Showing {loanTable.Rows.Count.ToString()} rows" ;
+                if (loanTable.Rows.Count == 0)
+                {
+                    dataGridViewLoan.DataSource = null;
+                    dataGridViewLoan.Rows.Clear();
+                    dataGridViewLoan.Columns.Clear();
+                    dataGridViewLoan.Columns.Add("Message", "");
+                    dataGridViewLoan.Rows.Add("No records found.");
+                    dataGridViewLoan.ClearSelection();
+                    Console.WriteLine("00000");
+                    labelDataRow.Text = $"Showing {loanTable.Rows.Count.ToString()} rows";
+
+                }
+                else
+                {
+                    dataGridViewLoan.DataSource = loanTable;
+
+                    dataGridViewLoan.Columns["id_loan"].HeaderText = "Loan ID";
+                    dataGridViewLoan.Columns["nama_member"].HeaderText = "Member Name";
+                    dataGridViewLoan.Columns["name_book"].HeaderText = "Book Title";
+                    dataGridViewLoan.Columns["dateborrowed_loan"].HeaderText = "Date Borrow";
+                    dataGridViewLoan.Columns["duedate_loan"].HeaderText = "Due Date";
+                    //dataGridViewMember.Columns["delete_member"].HeaderText = "Status";
+
+
+                    labelDataRow.Text = $"Showing {loanTable.Rows.Count.ToString()} rows";
+
+                }
             }
         }
 
@@ -202,7 +230,7 @@ namespace LPS_SimpleLibrary
 
             if (MessageBox.Show("Are you sure you want to delete this loan record?", "Confirm Delete", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                string queryDelete = @"DELETE FROM loan WHERE id_loan = @id_loan; 
+                string queryDelete = @"update loan set delete_loan = 1 where id_book = @id_book;
                                        UPDATE book 
                                     SET status_book = 0 
                                     WHERE id_book = @id_book      ";
@@ -228,7 +256,7 @@ namespace LPS_SimpleLibrary
             string connectionString = "server=localhost;uid=root;pwd=;database=lps_library";
 
             // Load member data
-            string queryMembers = "SELECT id_member, nama_member FROM member";
+            string queryMembers = "SELECT id_member, nama_member FROM member where delete_member = 0;";
             using (var connection = new MySqlConnection(connectionString))
             using (var command = new MySqlCommand(queryMembers, connection))
             using (var adapter = new MySqlDataAdapter(command))
@@ -288,12 +316,60 @@ namespace LPS_SimpleLibrary
                 dataGridViewLoan.Columns["id_member"].Visible = false;
                 dataGridViewLoan.Columns["id_book"].Visible = false;
             }
+            if (dataTable.Rows.Count == 0)
+            {
+                dataGridViewLoan.DataSource = null;
+                dataGridViewLoan.Rows.Clear();
+                dataGridViewLoan.Columns.Clear();
+                dataGridViewLoan.Columns.Add("Message", "");
+                dataGridViewLoan.Rows.Add("No records found.");
+                dataGridViewLoan.ClearSelection();
+                Console.WriteLine("00000");
+                labelDataRow.Text = $"Showing {dataTable.Rows.Count.ToString()} rows";
 
+            }
+            else
+            {
+                dataGridViewLoan.DataSource = dataTable;
+
+                dataGridViewLoan.Columns["id_loan"].HeaderText = "Loan ID";
+                dataGridViewLoan.Columns["nama_member"].HeaderText = "Member Name";
+                dataGridViewLoan.Columns["name_book"].HeaderText = "Book Title";
+                dataGridViewLoan.Columns["dateborrowed_loan"].HeaderText = "Date Borrow";
+                dataGridViewLoan.Columns["duedate_loan"].HeaderText = "Due Date";
+                //dataGridViewMember.Columns["delete_member"].HeaderText = "Status";
+
+
+                labelDataRow.Text = $"Showing {dataTable.Rows.Count.ToString()} rows";
+
+            }
             // Update the DataGridView
-            dataGridViewLoan.DataSource = dataTable;
-            labelDataRow.Text = $"Showing {dataTable.Rows.Count} rows.";
+            //dataGridViewLoan.DataSource = dataTable;
+            //labelDataRow.Text = $"Showing {dataTable.Rows.Count} rows.";
 
         }
+
+        private bool CheckForDuplicates(string idBook, string idMember, DateTime date)
+        {
+            string connectionString = "server=localhost;uid=root;pwd=;database=lps_library";
+            string query = @"SELECT COUNT(*) 
+                     FROM loan 
+                     WHERE id_book = @idBook AND id_member = @member AND dateborrowed_loan = @date AND delete_staff = 0";
+
+            using (var connection = new MySqlConnection(connectionString))
+            using (var command = new MySqlCommand(query, connection))
+            {
+                command.Parameters.AddWithValue("@idBook", idBook);
+                command.Parameters.AddWithValue("@member", idMember);
+                command.Parameters.AddWithValue("@date", date);
+
+
+                connection.Open();
+                int count = Convert.ToInt32(command.ExecuteScalar());
+                return count > 0; // Return true if duplicates exist
+            }
+        }
+
         private void dataGridViewLoan_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 

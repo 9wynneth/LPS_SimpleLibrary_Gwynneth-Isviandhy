@@ -36,11 +36,38 @@ namespace LPS_SimpleLibrary
             using (var command = new MySqlCommand(query, connection))
             using (var adapter = new MySqlDataAdapter(command))
             {
-                DataTable memberTable = new DataTable();
+                DataTable dataTable = new DataTable();
                 connection.Open();
-                adapter.Fill(memberTable);
-                dataGridViewBook.DataSource = memberTable;
-                labelDataRow.Text = $"Showing {memberTable.Rows.Count.ToString()} rows";
+                adapter.Fill(dataTable);
+                //dataGridViewBook.DataSource = memberTable;
+                //labelDataRow.Text = $"Showing {memberTable.Rows.Count.ToString()} rows";
+                if (dataTable.Rows.Count == 0)
+                {
+                    dataGridViewBook.DataSource = null;
+                    dataGridViewBook.Rows.Clear();
+                    dataGridViewBook.Columns.Clear();
+                    dataGridViewBook.Columns.Add("Message", "");
+                    dataGridViewBook.Rows.Add("No records found.");
+                    dataGridViewBook.ClearSelection();
+                    Console.WriteLine("00000");
+                    labelDataRow.Text = $"Showing {dataTable.Rows.Count.ToString()} rows";
+
+                }
+                else
+                {
+                    dataGridViewBook.DataSource = dataTable;
+
+                    dataGridViewBook.Columns["id_book"].HeaderText = "Book ID";
+                    dataGridViewBook.Columns["name_book"].HeaderText = "Name";
+                    dataGridViewBook.Columns["genre_book"].HeaderText = "Genre";
+                    dataGridViewBook.Columns["author_book"].HeaderText = "Author";
+                    dataGridViewBook.Columns["status_book"].HeaderText = "Status";
+                    //dataGridViewMember.Columns["delete_member"].HeaderText = "Status";
+
+
+                    labelDataRow.Text = $"Showing {dataTable.Rows.Count.ToString()} rows";
+
+                }
             }
 
         }
@@ -119,7 +146,7 @@ namespace LPS_SimpleLibrary
             string connectionString = "server=localhost;uid=root;pwd=;database=lps_library";
 
             string query = @"select id_book, name_book, genre_book, author_book, status_book from book       
-                            where delete_book = 0 and (name_book like @name or genre_book like @pass, 
+                            where delete_book = 0 and (name_book like @name or genre_book like @pass or 
                             author_book like @author or status_book like @status)  ;";
 
             DataTable dataTable = new DataTable();
@@ -138,10 +165,57 @@ namespace LPS_SimpleLibrary
                 adapter.Fill(dataTable);
 
             }
+            if (dataTable.Rows.Count == 0)
+            {
+                dataGridViewBook.DataSource = null;
+                dataGridViewBook.Rows.Clear();
+                dataGridViewBook.Columns.Clear();
+                dataGridViewBook.Columns.Add("Message", "");
+                dataGridViewBook.Rows.Add("No records found.");
+                dataGridViewBook.ClearSelection();
+                Console.WriteLine("00000");
+                labelDataRow.Text = $"Showing {dataTable.Rows.Count.ToString()} rows";
 
-            dataGridViewBook.DataSource = dataTable;
-            labelDataRow.Text = $"Showing {dataTable.Rows.Count} rows.";
+            }
+            else
+            {
+                dataGridViewBook.DataSource = dataTable;
 
+                dataGridViewBook.Columns["id_book"].HeaderText = "Book ID";
+                dataGridViewBook.Columns["name_book"].HeaderText = "Name";
+                dataGridViewBook.Columns["genre_book"].HeaderText = "Genre";
+                dataGridViewBook.Columns["author_book"].HeaderText = "Author";
+                dataGridViewBook.Columns["status_book"].HeaderText = "Status";
+                //dataGridViewMember.Columns["delete_member"].HeaderText = "Status";
+
+
+                labelDataRow.Text = $"Showing {dataTable.Rows.Count.ToString()} rows";
+
+            }
+            //dataGridViewBook.DataSource = dataTable;
+            //labelDataRow.Text = $"Showing {dataTable.Rows.Count} rows.";
+
+        }
+
+        private bool CheckForDuplicates(string name, string genre, string author)
+        {
+            string connectionString = "server=localhost;uid=root;pwd=;database=lps_library";
+            string query = @"SELECT COUNT(*) 
+                     FROM book 
+                     WHERE name_book = @name AND genre_book = @pass AND author_book = @author AND delete_book = 0";
+
+            using (var connection = new MySqlConnection(connectionString))
+            using (var command = new MySqlCommand(query, connection))
+            {
+                command.Parameters.AddWithValue("@name", name);
+                command.Parameters.AddWithValue("@pass", genre);
+                command.Parameters.AddWithValue("@author", author);
+
+
+                connection.Open();
+                int count = Convert.ToInt32(command.ExecuteScalar());
+                return count > 0; // Return true if duplicates exist
+            }
         }
 
         private void buttonAdd_Click(object sender, EventArgs e)
@@ -164,6 +238,24 @@ namespace LPS_SimpleLibrary
 
         private void buttonSave_Click(object sender, EventArgs e)
         {
+            string name = textBoxName.Text.Trim();
+            string genre = textBoxGenre.Text.Trim();
+            string author = textBoxAuthor.Text.Trim();
+
+
+            // Check if both fields are filled
+            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(genre) || string.IsNullOrEmpty(author))
+            {
+                MessageBox.Show("All name, genre, and author fields must be filled.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Check for duplicates
+            if (CheckForDuplicates(name, genre, author))
+            {
+                MessageBox.Show("A book with the same name, genre, and author already exists.", "Duplicate Record", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             if (!isEditMode)
             {
                 InsertNewBookRecord();

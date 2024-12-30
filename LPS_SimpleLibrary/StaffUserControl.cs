@@ -41,9 +41,33 @@ namespace LPS_SimpleLibrary
                 DataTable staffTable = new DataTable();
                 connection.Open();
                 adapter.Fill(staffTable);
-                dataGridViewStaff.DataSource = staffTable;
+                //dataGridViewStaff.DataSource = staffTable;
 
-                labelDataRow.Text = $"Showing {staffTable.Rows.Count.ToString()} rows";
+                //labelDataRow.Text = $"Showing {staffTable.Rows.Count.ToString()} rows";
+                if (staffTable.Rows.Count == 0)
+                {
+                    dataGridViewStaff.DataSource = null;
+                    dataGridViewStaff.Rows.Clear();
+                    dataGridViewStaff.Columns.Clear();
+                    dataGridViewStaff.Columns.Add("Message", "");
+                    dataGridViewStaff.Rows.Add("No records found.");
+                    dataGridViewStaff.ClearSelection();
+                    Console.WriteLine("00000");
+                    labelDataRow.Text = $"Showing {staffTable.Rows.Count.ToString()} rows";
+
+                }
+                else
+                {
+                    dataGridViewStaff.DataSource = staffTable;
+
+                    dataGridViewStaff.Columns["id_staff"].HeaderText = "Staff ID";
+                    dataGridViewStaff.Columns["nama_staff"].HeaderText = "Name";
+                    dataGridViewStaff.Columns["password_staff"].HeaderText = "Password";
+
+
+                    labelDataRow.Text = $"Showing {staffTable.Rows.Count.ToString()} rows";
+
+                }
             }
             dataGridViewStaff.Columns["id_staff"].Visible = false;
 
@@ -137,10 +161,54 @@ namespace LPS_SimpleLibrary
                 adapter.Fill(dataTable);
          
             }
+            if (dataTable.Rows.Count == 0)
+            {
+                dataGridViewStaff.DataSource = null;
+                dataGridViewStaff.Rows.Clear();
+                dataGridViewStaff.Columns.Clear();
+                dataGridViewStaff.Columns.Add("Message", "");
+                dataGridViewStaff.Rows.Add("No records found.");
+                dataGridViewStaff.ClearSelection();
+                Console.WriteLine("00000");
+                labelDataRow.Text = $"Showing {dataTable.Rows.Count.ToString()} rows";
 
-            dataGridViewStaff.DataSource = dataTable;
-            labelDataRow.Text = $"Showing {dataTable.Rows.Count} rows.";
+            }
+            else
+            {
+                dataGridViewStaff.DataSource = dataTable;
 
+                dataGridViewStaff.Columns["id_staff"].HeaderText = "Staff ID";
+                dataGridViewStaff.Columns["nama_staff"].HeaderText = "Name";
+                dataGridViewStaff.Columns["password_staff"].HeaderText = "Password";
+            
+                //dataGridViewMember.Columns["delete_member"].HeaderText = "Status";
+
+
+                labelDataRow.Text = $"Showing {dataTable.Rows.Count.ToString()} rows";
+
+            }
+            //dataGridViewStaff.DataSource = dataTable;
+            //labelDataRow.Text = $"Showing {dataTable.Rows.Count} rows.";
+
+        }
+        private bool CheckForDuplicates(string name, string pass)
+        {
+            string connectionString = "server=localhost;uid=root;pwd=;database=lps_library";
+            string query = @"SELECT COUNT(*) 
+                     FROM staff 
+                     WHERE nama_staff = @name AND password_staff = @pass AND delete_staff = 0";
+
+            using (var connection = new MySqlConnection(connectionString))
+            using (var command = new MySqlCommand(query, connection))
+            {
+                command.Parameters.AddWithValue("@name", name);
+                command.Parameters.AddWithValue("@pass", pass);
+
+
+                connection.Open();
+                int count = Convert.ToInt32(command.ExecuteScalar());
+                return count > 0; // Return true if duplicates exist
+            }
         }
 
         private void buttonAdd_Click(object sender, EventArgs e)
@@ -161,6 +229,21 @@ namespace LPS_SimpleLibrary
 
         private void buttonSave_Click(object sender, EventArgs e)
         {
+            string name = textBoxName.Text.Trim();
+            string pass = textBoxPassword.Text.Trim();
+
+            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(pass))
+            {
+                MessageBox.Show("Both Name and Password fields must be filled.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (CheckForDuplicates(name, pass))
+            {
+                MessageBox.Show("A staff with the same Name and Password already exists.", "Duplicate Record", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             if (!isEditMode)
             {
                 InsertNewStaffRecord();

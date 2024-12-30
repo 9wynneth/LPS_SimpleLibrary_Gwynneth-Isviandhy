@@ -38,9 +38,9 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(34, 46);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(278, 20);
+            this.label1.Size = new System.Drawing.Size(262, 20);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Please input your member id to borrow";
+            this.label1.Text = "Please input your member to borrow";
             // 
             // comboBox1
             // 
